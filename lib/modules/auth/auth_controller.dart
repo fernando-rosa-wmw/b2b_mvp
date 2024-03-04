@@ -5,14 +5,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../shared/interfaces/sign_in_service.dart';
 
-
 class AuthController extends ChangeNotifier {
-
   final SignInService googleSignInService = Modular.get();
 
   final authModelState = Atom<AuthModel>(AuthModel());
 
   googleSignIn() async {
     authModelState.value = await googleSignInService.handleSignIn();
+    Modular.to.navigate('/sale');
   }
 }
