@@ -143,6 +143,7 @@ class _SalePageState extends State<SalePage> {
             margin: const EdgeInsets.only(top: 50),
             height: 64,
             width: 64,
+            color: Colors.white,
             child: Stack(
               children: [
                 SizedBox(
@@ -165,7 +166,8 @@ class _SalePageState extends State<SalePage> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Container(
-                    decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.blue),
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text('10'),
