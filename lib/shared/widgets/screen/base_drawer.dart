@@ -1,4 +1,6 @@
+import 'package:b2b_mvp/modules/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class BaseDrawer extends StatelessWidget {
   const BaseDrawer({
@@ -10,6 +12,7 @@ class BaseDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthController authController = Modular.get();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -72,11 +75,11 @@ class BaseDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.summarize_outlined),
-            title: const Text('Summary'),
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
             selected: _selectedIndex == 2,
             onTap: () {
-              // Routefly.navigate(routePaths.home);
+              authController.disconnect();
             },
           ),
         ],

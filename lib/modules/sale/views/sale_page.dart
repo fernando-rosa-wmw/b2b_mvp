@@ -1,8 +1,10 @@
+import 'dart:ffi';
+
 import 'package:asp/asp.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_carousel.dart';
+import 'package:b2b_mvp/shared/widgets/products/product_item.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_drawer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -23,12 +25,11 @@ class _SalePageState extends State<SalePage> {
     CarouselController productFocusCarouselController = CarouselController();
     CarouselController productMostBoughtCarouselController =
         CarouselController();
-    int _current = 0;
     final sliderState = Atom(0);
 
     return RxBuilder(
       builder: (context) {
-        int _current = sliderState.value;
+        int current = sliderState.value;
         final double height = MediaQuery.of(context).size.height;
         final double width = MediaQuery.of(context).size.width;
         return Scaffold(
@@ -102,7 +103,7 @@ class _SalePageState extends State<SalePage> {
                       ProductCarousel(
                         carouselController: productFocusCarouselController,
                         sliderState: sliderState,
-                        current: _current,
+                        current: current,
                       )
                     ],
                   ),
@@ -126,11 +127,24 @@ class _SalePageState extends State<SalePage> {
                         indent: 16,
                         endIndent: 16,
                       ),
-                      ProductCarousel(
-                        carouselController: productMostBoughtCarouselController,
-                        sliderState: sliderState,
-                        current: _current,
-                      )
+                      SizedBox(
+                        width: width,
+                        height: 2000,
+                        child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisSpacing: 0,
+                              crossAxisSpacing: 0,
+                              crossAxisCount: 2,
+                              childAspectRatio: 1 / 2,
+                            ),
+                            itemCount: 10,
+                            padding: const EdgeInsets.all(8.0),
+                            itemBuilder: (context, index) {
+                              return const ProductItem();
+                            }),
+                      ),
                     ],
                   )
                 ],

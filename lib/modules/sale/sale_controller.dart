@@ -1,3 +1,1 @@
-class SaleController {
-
-}
+class SaleController {}

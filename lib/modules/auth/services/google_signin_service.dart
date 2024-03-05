@@ -56,4 +56,9 @@ class GoogleSignInService implements SignInService {
 
     return authModel;
   }
+
+  @override
+  void handleSignOut() async {
+    await GoogleSignIn().disconnect();
+  }
 }

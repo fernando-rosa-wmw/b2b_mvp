@@ -14,4 +14,9 @@ class AuthController extends ChangeNotifier {
     authModelState.value = await googleSignInService.handleSignIn();
     Modular.to.navigate('/sale');
   }
+
+  void disconnect() async {
+    googleSignInService.handleSignOut();
+    Modular.to.navigate('/auth');
+  }
 }
