@@ -68,7 +68,7 @@ class BaseDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.task_alt_outlined),
-            title: const Text('Tasks'),
+            title: const Text('Perfil'),
             selected: _selectedIndex == 1,
             onTap: () {
               // Routefly.navigate(routePaths.task.path);
