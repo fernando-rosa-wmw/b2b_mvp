@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:b2b_mvp/shared/interfaces/sign_in_service.dart';
+import 'package:b2b_mvp/shared/interfaces/services/sign_in_service.dart';
 import 'package:b2b_mvp/shared/models/auth_model.dart';
 import 'package:b2b_mvp/shared/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';

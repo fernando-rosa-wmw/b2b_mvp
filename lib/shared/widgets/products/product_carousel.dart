@@ -24,16 +24,23 @@ class ProductCarousel extends StatelessWidget {
           carouselController: carouselController,
           options: CarouselOptions(
               height: 400.0,
-              aspectRatio: 2.0,
               enlargeCenterPage: true,
-              autoPlay: true,
+              disableCenter: true,
+              // autoPlay: true,
               onPageChanged: (i, reason) {
                 sliderState.value = i;
               }),
           items: [1, 2, 3, 4, 5].map((i) {
             return Builder(
               builder: (BuildContext context) {
-                return const ProductItem();
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ProductItem(),
+                    ProductItem(),
+                  ],
+                );
               },
             );
           }).toList(),

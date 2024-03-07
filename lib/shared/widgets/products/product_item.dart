@@ -12,7 +12,7 @@ class ProductItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          width: 200,
+          width: 175,
           height: 350,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(2),
@@ -44,32 +44,41 @@ class ProductItem extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  'Trident de Menta Unifsdfhdjfhdjfhkjds kkkkk',
-                  softWrap: true,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 17),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    'Trident de Menta Muito bom',
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text(
-                      'R\$ 1,00/un',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.blue),
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        'R\$ 1,00/un',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blue),
+                      ),
                     ),
-                    Text(
-                      'R\$ 12,00',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.blue),
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        'R\$ 12,00',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.blue),
+                      ),
                     ),
                   ],
                 ),
