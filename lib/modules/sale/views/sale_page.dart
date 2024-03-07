@@ -160,81 +160,79 @@ class _SalePageState extends State<SalePage> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return SingleChildScrollView(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const OrderStatusIndicator(),
-                                  const SizedBox(
-                                    height: 50,
-                                  ),
-                                  const MyCardHeader(),
-                                  const Divider(),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Container(
-                                        height: 32,
-                                        width: width,
-                                        decoration: const BoxDecoration(
-                                            color: Colors.blue),
-                                        child: const Padding(
-                                          padding: EdgeInsets.only(left: 8.0),
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                                textAlign: TextAlign.start,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 17),
-                                                'Produtos selecionado (2)'),
-                                          ),
+                          return Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const OrderStatusIndicator(),
+                                const SizedBox(
+                                  height: 50,
+                                ),
+                                const MyCardHeader(),
+                                const Divider(),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      height: 32,
+                                      width: width,
+                                      decoration: const BoxDecoration(
+                                          color: Colors.blue),
+                                      child: const Padding(
+                                        padding: EdgeInsets.only(left: 8.0),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 17),
+                                              'Produtos selecionado (2)'),
                                         ),
                                       ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                        ),
-                                        child: SizedBox(
-                                          height: height * .5,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: ListView.builder(
-                                                itemCount: 5,
-                                                itemBuilder: (context, index) {
-                                                  return ProductCard();
-                                                }),
-                                          ),
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: Colors.grey),
+                                      ),
+                                      child: SizedBox(
+                                        height: height * .5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: ListView.builder(
+                                              itemCount: 5,
+                                              itemBuilder: (context, index) {
+                                                return ProductCard();
+                                              }),
                                         ),
                                       ),
-                                      const OrderTotalValue(),
-                                      const TextField(
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          labelText: 'CUPOM',
-                                        ),
+                                    ),
+                                    const OrderTotalValue(),
+                                    const TextField(
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'CUPOM',
                                       ),
-                                      SizedBox(
-                                        height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 50,
+                                      width: width,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder()),
+                                        onPressed: () {},
+                                        child: Text('VALIDAR CUPOM'),
                                       ),
-                                      SizedBox(
-                                        height: 50,
-                                        width: width,
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              shape: RoundedRectangleBorder()),
-                                          onPressed: () {},
-                                          child: Text('VALIDAR CUPOM'),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
+                                    )
+                                  ],
+                                )
+                              ],
                             ),
                           );
                         },
