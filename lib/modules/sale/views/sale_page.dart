@@ -3,6 +3,7 @@ import 'package:b2b_mvp/shared/widgets/products/product_carousel.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_item.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_drawer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -154,7 +155,91 @@ class _SalePageState extends State<SalePage> {
                   child: FloatingActionButton(
                     backgroundColor: Colors.white,
                     elevation: 0,
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const OrderStatusIndicator(),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                  const MyCardHeader(),
+                                  const Divider(),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Container(
+                                        height: 32,
+                                        width: width,
+                                        decoration: const BoxDecoration(
+                                            color: Colors.blue),
+                                        child: const Padding(
+                                          padding: EdgeInsets.only(left: 8.0),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 17),
+                                                'Produtos selecionado (2)'),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                        ),
+                                        child: SizedBox(
+                                          height: height * .5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: ListView.builder(
+                                                itemCount: 5,
+                                                itemBuilder: (context, index) {
+                                                  return ProductCard();
+                                                }),
+                                          ),
+                                        ),
+                                      ),
+                                      const OrderTotalValue(),
+                                      const TextField(
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: 'CUPOM',
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      SizedBox(
+                                        height: 50,
+                                        width: width,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              shape: RoundedRectangleBorder()),
+                                          onPressed: () {},
+                                          child: Text('VALIDAR CUPOM'),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(width: 3, color: Colors.black),
                       borderRadius: BorderRadius.circular(100),
@@ -187,6 +272,308 @@ class _SalePageState extends State<SalePage> {
           ),
         );
       },
+    );
+  }
+}
+
+class OrderTotalValue extends StatelessWidget {
+  const OrderTotalValue({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            'Total: ',
+            style: TextStyle(fontSize: 17),
+          ),
+          Text(
+            'R\$ 11,67',
+            style: TextStyle(
+              fontSize: 22,
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProductCard extends StatelessWidget {
+  const ProductCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card.outlined(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  child: Card(
+                    child: Image.network(
+                        color: Colors.blue,
+                        'https://cdn-icons-png.flaticon.com/512/2751/2751071.png'),
+                  ),
+                ),
+              ),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Copo Gelado Coca-Cola',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Text(
+                    'R\$ 4,76',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                ],
+              )
+            ],
+          ),
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text('Quantidade'),
+                    NumericStepButton(
+                      onChanged: (int) {},
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Subtotal'),
+                      Text(
+                        'R\$ 4,76',
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    CupertinoIcons.trash,
+                    color: Colors.red,
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class MyCardHeader extends StatelessWidget {
+  const MyCardHeader({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: AlignmentDirectional.topStart,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
+        children: [
+          Text(
+            'Meu Carrinho',
+            style: TextStyle(fontSize: 32),
+          ),
+          Text(
+            '(5 itens)',
+            style: TextStyle(fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class OrderStatusIndicator extends StatelessWidget {
+  const OrderStatusIndicator({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 24.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            children: [
+              Ink(
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.blue),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const Text('Carrinho'),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 1,
+              color: Colors.grey,
+              width: 50,
+            ),
+          ),
+          Column(
+            children: [
+              Ink(
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.grey),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.fire_truck,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Text('Entrega'),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 1,
+              color: Colors.grey,
+              width: 50,
+            ),
+          ),
+          Column(
+            children: [
+              Ink(
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.grey),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.monetization_on,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Text('Pagamento')
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NumericStepButton extends StatefulWidget {
+  final int minValue;
+  final int maxValue;
+
+  final ValueChanged<int> onChanged;
+
+  NumericStepButton(
+      {super.key,
+      this.minValue = 0,
+      this.maxValue = 10,
+      required this.onChanged});
+
+  @override
+  State<NumericStepButton> createState() {
+    return _NumericStepButtonState();
+  }
+}
+
+class _NumericStepButtonState extends State<NumericStepButton> {
+  int counter = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card.outlined(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+            icon: Icon(
+              Icons.remove,
+              color: Colors.blue,
+            ),
+            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
+            iconSize: 32.0,
+            color: Theme.of(context).primaryColor,
+            onPressed: () {
+              setState(() {
+                if (counter > widget.minValue) {
+                  counter--;
+                }
+                widget.onChanged(counter);
+              });
+            },
+          ),
+          Text(
+            '$counter',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black87,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.add,
+              color: Colors.blue,
+            ),
+            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
+            iconSize: 32.0,
+            color: Theme.of(context).primaryColor,
+            onPressed: () {
+              setState(() {
+                if (counter < widget.maxValue) {
+                  counter++;
+                }
+                widget.onChanged(counter);
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }

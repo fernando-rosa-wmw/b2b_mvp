@@ -10,7 +10,7 @@ class AppWidget extends StatelessWidget {
       routerConfig: Modular.routerConfig,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
     );
