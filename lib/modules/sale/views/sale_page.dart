@@ -2,6 +2,7 @@ import 'package:asp/asp.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_carousel.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_item.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_drawer.dart';
+import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +136,9 @@ class _SalePageState extends State<SalePage> {
                     itemCount: 10,
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     itemBuilder: (context, index) {
-                      return const ProductItem();
+                      return ProductItem(
+                        onPressed: () {},
+                      );
                     }),
               ],
             ),
@@ -156,87 +159,7 @@ class _SalePageState extends State<SalePage> {
                     backgroundColor: Colors.white,
                     elevation: 0,
                     onPressed: () {
-                      showModalBottomSheet<void>(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const OrderStatusIndicator(),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                const MyCardHeader(),
-                                const Divider(),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Container(
-                                      height: 32,
-                                      width: width,
-                                      decoration: const BoxDecoration(
-                                          color: Colors.blue),
-                                      child: const Padding(
-                                        padding: EdgeInsets.only(left: 8.0),
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 17),
-                                              'Produtos selecionado (2)'),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Colors.grey),
-                                      ),
-                                      child: SizedBox(
-                                        height: height * .5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: ListView.builder(
-                                              itemCount: 5,
-                                              itemBuilder: (context, index) {
-                                                return ProductCard();
-                                              }),
-                                        ),
-                                      ),
-                                    ),
-                                    const OrderTotalValue(),
-                                    const TextField(
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'CUPOM',
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    SizedBox(
-                                      height: 50,
-                                      width: width,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder()),
-                                        onPressed: () {},
-                                        child: Text('VALIDAR CUPOM'),
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      );
+                      showCartSheet(context, width, height);
                     },
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(width: 3, color: Colors.black),
@@ -267,6 +190,88 @@ class _SalePageState extends State<SalePage> {
               Modular.to.navigate(route);
             },
             pageIndex: 0,
+          ),
+        );
+      },
+    );
+  }
+
+  void showCartSheet(BuildContext context, double width, double height) {
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const OrderStatusIndicator(),
+              const SizedBox(
+                height: 40,
+              ),
+              const MyCardHeader(),
+              const Divider(),
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    height: 32,
+                    width: width,
+                    decoration: const BoxDecoration(color: Colors.blue),
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17),
+                            'Produtos selecionado (2)'),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    child: SizedBox(
+                      height: height * .5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ListView.builder(
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return ProductCard();
+                            }),
+                      ),
+                    ),
+                  ),
+                  const OrderTotalValue(),
+                  const TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'CUPOM',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 50,
+                    width: width,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder()),
+                      onPressed: () {},
+                      child: Text('VALIDAR CUPOM'),
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
         );
       },
@@ -493,82 +498,6 @@ class OrderStatusIndicator extends StatelessWidget {
               ),
               Text('Pagamento')
             ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class NumericStepButton extends StatefulWidget {
-  final int minValue;
-  final int maxValue;
-
-  final ValueChanged<int> onChanged;
-
-  NumericStepButton(
-      {super.key,
-      this.minValue = 0,
-      this.maxValue = 10,
-      required this.onChanged});
-
-  @override
-  State<NumericStepButton> createState() {
-    return _NumericStepButtonState();
-  }
-}
-
-class _NumericStepButtonState extends State<NumericStepButton> {
-  int counter = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card.outlined(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            icon: Icon(
-              Icons.remove,
-              color: Colors.blue,
-            ),
-            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
-            iconSize: 32.0,
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              setState(() {
-                if (counter > widget.minValue) {
-                  counter--;
-                }
-                widget.onChanged(counter);
-              });
-            },
-          ),
-          Text(
-            '$counter',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.add,
-              color: Colors.blue,
-            ),
-            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
-            iconSize: 32.0,
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              setState(() {
-                if (counter < widget.maxValue) {
-                  counter++;
-                }
-                widget.onChanged(counter);
-              });
-            },
           ),
         ],
       ),

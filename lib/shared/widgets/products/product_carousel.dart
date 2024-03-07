@@ -33,7 +33,11 @@ class ProductCarousel extends StatelessWidget {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [1, 2].map((e) => const ProductItem()).toList(),
+              children: [1, 2]
+                  .map((e) => ProductItem(
+                        onPressed: () {},
+                      ))
+                  .toList(),
             );
           },
           itemCount: 5,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
+  final Function() onPressed;
   const ProductItem({
     super.key,
+    required this.onPressed,
   });
 
   @override

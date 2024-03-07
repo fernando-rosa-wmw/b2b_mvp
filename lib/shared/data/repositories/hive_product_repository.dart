@@ -7,6 +7,19 @@ class HiveProductRepository implements ProductRepository {
   late final Box box;
   static const boxName = 'HiveProductRepository';
 
+  mock() async {
+    var box = await Hive.openBox<ProductModel>(boxName);
+    List<ProductModel> list = List<ProductModel>.generate(
+        100,
+        (index) => ProductModel(
+            id: 'id',
+            name: 'name',
+            description: 'description',
+            price: index + 10,
+            imageUrl: 'imageUrl'));
+    box.addAll(list);
+  }
+
   @override
   Future<bool> delete(int id) async {
     // await openBox();
