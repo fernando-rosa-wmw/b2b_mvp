@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 part 'auth_model.g.dart';
 
-@HiveType(typeId: 30)
+@HiveType(typeId: HiveTypes.authTypeId)
 class AuthModel {
   @HiveField(0)
   final String? email;
