@@ -1,4 +1,5 @@
 import 'package:b2b_mvp/modules/sale/sale_controller.dart';
+import 'package:b2b_mvp/modules/sale/views/sale_page.dart';
 import 'package:b2b_mvp/shared/data/repositories/hive_product_repository.dart';
 import 'package:b2b_mvp/shared/interfaces/repositories/product_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -9,5 +10,11 @@ class SaleModule extends Module {
     i.add(SaleController.new);
     i.add<ProductRepository>(HiveProductRepository.new);
     super.binds(i);
+  }
+
+  @override
+  void routes(RouteManager r) {
+    r.child('/', child: (context) => const SalePage());
+    super.routes(r);
   }
 }
