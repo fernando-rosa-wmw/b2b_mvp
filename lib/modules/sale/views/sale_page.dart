@@ -244,7 +244,7 @@ class _SalePageState extends State<SalePage> {
                         child: ListView.builder(
                             itemCount: 5,
                             itemBuilder: (context, index) {
-                              return ProductCard();
+                              return const ProductCard();
                             }),
                       ),
                     ),
@@ -256,7 +256,7 @@ class _SalePageState extends State<SalePage> {
                       labelText: 'CUPOM',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
@@ -264,9 +264,9 @@ class _SalePageState extends State<SalePage> {
                     width: width,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder()),
+                          shape: const RoundedRectangleBorder()),
                       onPressed: () {},
-                      child: Text('VALIDAR CUPOM'),
+                      child: const Text('VALIDATOR CUPOM'),
                     ),
                   )
                 ],
@@ -286,8 +286,8 @@ class OrderTotalValue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -323,7 +323,7 @@ class ProductCard extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Container(
+                child: SizedBox(
                   height: 100,
                   width: 100,
                   child: Card(
@@ -351,7 +351,7 @@ class ProductCard extends StatelessWidget {
               )
             ],
           ),
-          Divider(),
+          const Divider(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -359,14 +359,14 @@ class ProductCard extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Text('Quantidade'),
+                    const Text('Quantidade'),
                     NumericStepButton(
                       onChanged: (int) {},
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -381,7 +381,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     CupertinoIcons.trash,
                     color: Colors.red,
                   ),
