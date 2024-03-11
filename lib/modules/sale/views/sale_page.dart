@@ -26,7 +26,6 @@ class _SalePageState extends State<SalePage> {
       CarouselController();
   final SaleController saleController = Modular.get();
   final ProductReducer productReducer = Modular.get();
-  final sliderState = Atom(0);
 
   @override
   void initState() {
@@ -44,7 +43,6 @@ class _SalePageState extends State<SalePage> {
         ]);
     final List<ProductModel> productList =
         productReducer.productGridState.value;
-    int current = sliderState.value;
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
 
@@ -116,8 +114,8 @@ class _SalePageState extends State<SalePage> {
                 ),
                 ProductCarousel(
                   carouselController: productFocusCarouselController,
-                  sliderState: sliderState,
-                  current: current,
+                  sliderState: productReducer.sliverState,
+                  action: productReducer.sliverOnChange,
                 )
               ],
             ),

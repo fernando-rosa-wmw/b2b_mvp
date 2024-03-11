@@ -8,15 +8,17 @@ class ProductCarousel extends StatelessWidget {
     super.key,
     required this.carouselController,
     required this.sliderState,
-    required int current,
-  }) : _current = current;
+    required this.action,
+  });
 
   final CarouselController carouselController;
   final Atom<int> sliderState;
-  final int _current;
+  final Atom<int> action;
 
   @override
   Widget build(BuildContext context) {
+    context.select(() => [sliderState]);
+
     return Column(
       children: [
         CarouselSlider.builder(
@@ -27,7 +29,7 @@ class ProductCarousel extends StatelessWidget {
               enlargeCenterPage: false,
               viewportFraction: 1,
               onPageChanged: (i, reason) {
-                sliderState.value = i;
+                action.setValue(i);
               }),
           itemBuilder: (context, index, realIndex) {
             return Row(
@@ -58,7 +60,7 @@ class ProductCarousel extends StatelessWidget {
                     color: (Theme.of(context).brightness == Brightness.dark
                             ? Colors.white
                             : Colors.blue)
-                        .withOpacity(_current == entry.key ? 0.9 : 0.4)),
+                        .withOpacity(sliderState.value == entry.key ? 0.9 : 0.4)),
               ),
             );
           }).toList(),
