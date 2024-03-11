@@ -1,3 +1,4 @@
+import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
@@ -49,23 +50,21 @@ class ProductItem extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Text(
-                    name,
-                    softWrap: true,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                child: Text(
+                  name,
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 17, fontWeight: FontWeight.bold),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    FittedBox(
+                    const FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
                         'R\$ 1,00/un',
@@ -75,7 +74,7 @@ class ProductItem extends StatelessWidget {
                             color: Colors.blue),
                       ),
                     ),
-                    FittedBox(
+                    const FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
                         'R\$ 12,00',
@@ -85,6 +84,7 @@ class ProductItem extends StatelessWidget {
                             color: Colors.blue),
                       ),
                     ),
+                    NumericStepButton(onChanged: (i) {}),
                   ],
                 ),
               ),
