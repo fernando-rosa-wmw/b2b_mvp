@@ -4,6 +4,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class AppModule extends Module {
   @override
+  List<Module> get imports => [
+        AuthModule(),
+      ];
+
+  @override
   void routes(RouteManager r) {
     r.module('/', module: AuthModule());
     r.module('/auth', module: AuthModule());

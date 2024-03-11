@@ -18,9 +18,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
   Atom<AuthModel> authModelState = controller.authModelState;
-    print('build widget');
     return RxBuilder(builder: (context) {
-      print('build rx');
       AuthModel authModel = authModelState.value;
       return Scaffold(
         appBar: AppBar(

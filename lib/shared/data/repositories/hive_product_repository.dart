@@ -9,15 +9,17 @@ class HiveProductRepository implements ProductRepository {
 
   mock() async {
     var box = await Hive.openBox<ProductModel>(boxName);
-    List<ProductModel> list = List<ProductModel>.generate(
-        100,
-        (index) => ProductModel(
-            id: 'id',
-            name: 'name',
-            description: 'description',
-            price: index + 10,
-            imageUrl: 'imageUrl'));
-    box.addAll(list);
+    if (box.values.toList().isEmpty) {
+      List<ProductModel> list = List<ProductModel>.generate(
+          15,
+          (index) => ProductModel(
+              id: 'id',
+              name: 'Trident $index',
+              description: 'description',
+              price: index + 10,
+              imageUrl: 'imageUrl'));
+      await box.addAll(list);
+    }
   }
 
   @override
@@ -34,7 +36,7 @@ class HiveProductRepository implements ProductRepository {
 
   @override
   Future<List<ProductModel>> getAll() async {
-    // await openBox();
+    var box = await Hive.openBox<ProductModel>(boxName);
     try {
       List<ProductModel> products = box.values.toList() as List<ProductModel>;
       return products;

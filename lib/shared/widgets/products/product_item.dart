@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
   final Function() onPressed;
+  final String name;
+
   const ProductItem({
     super.key,
     required this.onPressed,
+    required this.name,
   });
 
   @override
@@ -44,15 +47,15 @@ class ProductItem extends StatelessWidget {
                   ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
-                    'Trident de Menta Muito bom',
+                    name,
                     softWrap: true,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
