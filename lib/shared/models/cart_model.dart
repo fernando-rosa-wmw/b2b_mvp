@@ -8,7 +8,7 @@ class CartModel extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
-  final HiveList productList;
+  HiveList? productList;
   @HiveField(2)
   final String name;
   @HiveField(3)
@@ -18,11 +18,17 @@ class CartModel extends HiveObject {
 
   CartModel({
     required this.id,
-    required this.productList,
+    this.productList,
     required this.name,
     required this.quantity,
     required this.price,
   });
+
+  @override
+  String toString() {
+    return 'CartModel{id: $id, productList: $productList, name: $name, quantity: $quantity, price: $price}';
+  }
+
 // @HiveField(1)
 // String cdEmpresa;
 // @HiveField(2)

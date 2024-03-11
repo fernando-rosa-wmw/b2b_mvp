@@ -24,6 +24,11 @@ class ProductModel extends HiveObject {
     required this.imageUrl,
   });
 
+  @override
+  String toString() {
+    return 'ProductModel{id: $id, name: $name, description: $description, price: $price, imageUrl: $imageUrl}';
+  }
+
 // ProductModel(
 //     this.cdEmpresa,
 //     this.cdProduto,

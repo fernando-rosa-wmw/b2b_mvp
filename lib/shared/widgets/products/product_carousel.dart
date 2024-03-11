@@ -38,7 +38,7 @@ class ProductCarousel extends StatelessWidget {
               children: [1, 2]
                   .map((e) => ProductItem(
                         name: 'teste',
-                        onPressed: () {},
+                        onPressed: (index) {},
                       ))
                   .toList(),
             );

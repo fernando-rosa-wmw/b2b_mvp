@@ -7,8 +7,10 @@ import 'package:logger/logger.dart';
 class HiveCartRepository implements CartRepository {
   static const boxName = 'HiveCartRepository';
 
-  Future<Box> _getBox() async {
-    return await Hive.openBox<CartModel>(boxName);
+  _getBox() async {
+    if (!Hive.isBoxOpen(boxName)) {
+      return await Hive.openBox<CartModel>(boxName);
+    }
   }
 
   @override
@@ -61,7 +63,7 @@ class HiveCartRepository implements CartRepository {
 
   @override
   Future<CartModel> update(CartModel product) async {
-    var box = await _getBox();
+    await _getBox();
     try {
       product.save();
       return product;
@@ -72,13 +74,35 @@ class HiveCartRepository implements CartRepository {
   }
 
   @override
-  void addProducts(List<ProductModel> products, CartModel cardModel) async {
+  Future<bool> addProducts(List<ProductModel> products, CartModel cardModel) async {
+    await _getBox();
     try {
-      cardModel.productList.addAll(products);
+      cardModel.productList!.addAll(products);
+      Logger().i('addProductsRepo ${cardModel.toString()}');
       cardModel.save();
+      return true;
     } catch (e, s) {
       Logger().e(e, stackTrace: s);
       throw Exception(e);
     }
+  }
+
+  @override
+  Future<CartModel> getOne() async {
+    var box = await Hive.openBox<CartModel>(boxName);
+    var productBox = await Hive.openBox<ProductModel>('HiveProductRepository');
+    CartModel? cart = box.values.lastOrNull;
+
+    if (cart == null) {
+      cart = CartModel(
+          id: 'id',
+          name: 'generated',
+          quantity: 0,
+          price: 0,
+          productList: HiveList(productBox));
+      box.add(cart);
+      box.flush();
+    }
+    return cart;
   }
 }

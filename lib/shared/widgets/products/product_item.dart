@@ -2,19 +2,23 @@ import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
-  final Function() onPressed;
+  final Function(int) onPressed;
   final String name;
+  final int? index;
 
   const ProductItem({
     super.key,
     required this.onPressed,
     required this.name,
+    this.index
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        onPressed(index ?? 0);
+      },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(

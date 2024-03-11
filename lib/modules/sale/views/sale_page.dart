@@ -1,4 +1,5 @@
 import 'package:asp/asp.dart';
+import 'package:b2b_mvp/modules/sale/reducers/cart_reducer.dart';
 import 'package:b2b_mvp/modules/sale/reducers/product_reducer.dart';
 import 'package:b2b_mvp/modules/sale/sale_controller.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
@@ -10,6 +11,7 @@ import 'package:b2b_mvp/shared/widgets/screen/base_drawer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:logger/logger.dart';
 
 import '../../../shared/widgets/navbar/nav_bar.dart';
 
@@ -26,6 +28,7 @@ class _SalePageState extends State<SalePage> {
       CarouselController();
   final SaleController saleController = Modular.get();
   final ProductReducer productReducer = Modular.get();
+  final CartReducer cartReducer = Modular.get();
 
   @override
   void initState() {
@@ -33,6 +36,7 @@ class _SalePageState extends State<SalePage> {
     // TODO - Remover
     saleController.mockList();
     productReducer.fetchProduct();
+    cartReducer.fetchCard();
   }
 
   @override
@@ -40,6 +44,7 @@ class _SalePageState extends State<SalePage> {
     context.select(() => [
           productReducer.productGridState,
           productReducer.productGridLoadingState,
+          cartReducer.cartState,
         ]);
     final List<ProductModel> productList =
         productReducer.productGridState.value;
@@ -143,7 +148,12 @@ class _SalePageState extends State<SalePage> {
             ),
             Stack(
               children: [
-                ResponsiveGridView(productList: productList),
+                ResponsiveGridView(
+                  onTab: (index) {
+                    cartReducer.addProductToCard.setValue(productList[index]);
+                  },
+                  productList: productList,
+                ),
                 if (productReducer.productGridLoadingState.value)
                   const Align(
                     alignment: Alignment.topCenter,
@@ -155,7 +165,8 @@ class _SalePageState extends State<SalePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: CartFloatingActionButton(width: width, height: height),
+      floatingActionButton:
+          CartFloatingActionButton(width: width, height: height),
       bottomNavigationBar: NavBar(
         onTap: (route) {
           Modular.to.navigate(route);

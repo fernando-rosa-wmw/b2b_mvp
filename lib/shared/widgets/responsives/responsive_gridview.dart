@@ -4,14 +4,17 @@ import 'package:b2b_mvp/shared/widgets/products/product_item.dart';
 import 'package:flutter/material.dart';
 
 class ResponsiveGridView extends StatelessWidget {
+
   const ResponsiveGridView({
     super.key,
     required this.productList,
+    required this.onTab,
     this.crossAxisCount,
-    this.childAspectRatio
+    this.childAspectRatio,
   });
 
   final List<ProductModel> productList;
+  final Function(int) onTab;
   final int? crossAxisCount;
   final double? childAspectRatio;
 
@@ -29,7 +32,10 @@ class ResponsiveGridView extends StatelessWidget {
       itemBuilder: (context, index) {
         ProductModel item = productList[index];
         return ProductItem(
-          onPressed: () {},
+          index: index,
+          onPressed: (index) {
+            onTab(index);
+          },
           name: item.name,
         );
       },

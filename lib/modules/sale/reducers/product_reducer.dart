@@ -33,6 +33,5 @@ class ProductReducer extends Reducer {
   Future<void> _fetchProduct() async {
     productGridState.value = await productRepository.getAll();
     productGridLoadingState.value = false;
-    Logger().i('_fetchProduct');
   }
 }
