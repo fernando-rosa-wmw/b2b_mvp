@@ -1,17 +1,16 @@
+import 'dart:math';
+
+import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
   final Function(int) onPressed;
-  final String name;
+  final ProductModel product;
   final int? index;
 
-  const ProductItem({
-    super.key,
-    required this.onPressed,
-    required this.name,
-    this.index
-  });
+  const ProductItem(
+      {super.key, required this.onPressed, required this.product, this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +35,7 @@ class ProductItem extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.topLeft,
                   children: [
-                    Image.network(
-                        'https://cdn-icons-png.flaticon.com/512/2751/2751071.png'),
+                    Image.network(product.imageUrl),
                     Container(
                       decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: Colors.blue),
@@ -55,7 +53,7 @@ class ProductItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  name,
+                  product.name,
                   softWrap: true,
                   textAlign: TextAlign.center,
                   style: const TextStyle(

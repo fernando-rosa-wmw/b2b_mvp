@@ -36,7 +36,7 @@ class ResponsiveGridView extends StatelessWidget {
           onPressed: (index) {
             onTab(index);
           },
-          name: item.name,
+          product: item,
         );
       },
     );

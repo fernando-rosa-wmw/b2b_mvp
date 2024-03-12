@@ -2,16 +2,15 @@ import 'package:asp/asp.dart';
 import 'package:b2b_mvp/modules/sale/reducers/cart_reducer.dart';
 import 'package:b2b_mvp/modules/sale/reducers/product_reducer.dart';
 import 'package:b2b_mvp/modules/sale/sale_controller.dart';
+import 'package:b2b_mvp/shared/models/cart_model.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/cart/cart.dart';
-import 'package:b2b_mvp/shared/widgets/cart/cart_floating_action_button.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_carousel.dart';
 import 'package:b2b_mvp/shared/widgets/responsives/responsive_gridview.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_drawer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:logger/logger.dart';
 
 import '../../../shared/widgets/navbar/nav_bar.dart';
 
@@ -165,8 +164,48 @@ class _SalePageState extends State<SalePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:
-          CartFloatingActionButton(width: width, height: height),
+      floatingActionButton: Container(
+        margin: const EdgeInsets.only(top: 50),
+        height: 64,
+        width: 64,
+        color: Colors.transparent,
+        child: Stack(
+          children: [
+            SizedBox(
+              height: 75,
+              width: 75,
+              child: FloatingActionButton(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                onPressed: () {
+                  showCartSheet(context, cartReducer.cartState);
+                },
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(width: 3, color: Colors.black),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: const Icon(
+                  Icons.shopping_cart_outlined,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            if (cartReducer.cartState.value != null && cartReducer.cartState.value!.productList!.isNotEmpty)
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.blue),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        '${cartReducer.cartState.value!.productList!.length}'),
+                  ),
+                ),
+            )
+          ],
+        ),
+      ),
       bottomNavigationBar: NavBar(
         onTap: (route) {
           Modular.to.navigate(route);
@@ -177,12 +216,14 @@ class _SalePageState extends State<SalePage> {
   }
 }
 
-void showCartSheet(BuildContext context, double width, double height) {
+void showCartSheet(BuildContext context, Atom<CartModel?> cartState) {
   showModalBottomSheet<void>(
     isScrollControlled: true,
     context: context,
     builder: (BuildContext context) {
-      return const CartWidget();
+      return CartWidget(
+        cartState: cartState,
+      );
     },
   );
 }

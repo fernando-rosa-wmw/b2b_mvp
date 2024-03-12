@@ -1,4 +1,5 @@
 import 'package:b2b_mvp/shared/data/hive_types.dart';
+import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:hive/hive.dart';
 
 part 'cart_model.g.dart';
@@ -8,7 +9,7 @@ class CartModel extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
-  HiveList? productList;
+  HiveList<ProductModel>? productList;
   @HiveField(2)
   final String name;
   @HiveField(3)

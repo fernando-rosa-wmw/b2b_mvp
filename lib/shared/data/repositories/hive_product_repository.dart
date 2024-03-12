@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:b2b_mvp/shared/interfaces/repositories/product_repository.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:hive/hive.dart';
@@ -17,7 +19,7 @@ class HiveProductRepository implements ProductRepository {
               name: 'Trident $index',
               description: 'description',
               price: index + 10,
-              imageUrl: 'imageUrl'));
+              imageUrl: 'https://cdn-icons-png.flaticon.com/512/2751/275107${Random.secure().nextInt(10)}.png'));
       await box.addAll(list);
     }
   }

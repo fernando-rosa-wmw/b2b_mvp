@@ -1,18 +1,21 @@
-import 'package:b2b_mvp/shared/widgets/cart/my_cart_header.dart';
+import 'package:asp/asp.dart';
+import 'package:b2b_mvp/shared/models/cart_model.dart';
+import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/cart/order_status_indicator.dart';
-import 'package:b2b_mvp/shared/widgets/cart/order_total_value.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_card.dart';
 import 'package:flutter/material.dart';
 
 class CartWidget extends StatelessWidget {
-  const CartWidget({
-    super.key,
-  });
+  Atom<CartModel?> cartState;
+
+  CartWidget({super.key, required this.cartState});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    context.select(() => [cartState]);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -22,7 +25,23 @@ class CartWidget extends StatelessWidget {
           const SizedBox(
             height: 40,
           ),
-          const MyCardHeader(),
+          Align(
+            alignment: AlignmentDirectional.topStart,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                const Text(
+                  'Meu Carrinho',
+                  style: TextStyle(fontSize: 32),
+                ),
+                Text(
+                  '(${(cartState.value == null) ? 0 : cartState.value!.productList!.length} itens)',
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ),
           const Divider(),
           Column(
             mainAxisSize: MainAxisSize.max,
@@ -31,17 +50,17 @@ class CartWidget extends StatelessWidget {
                 height: 32,
                 width: width,
                 decoration: const BoxDecoration(color: Colors.blue),
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                         textAlign: TextAlign.start,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 17),
-                        'Produtos selecionado (2)'),
+                        'Produtos selecionado (${(cartState.value == null) ? 0 : cartState.value!.productList!.length})'),
                   ),
                 ),
               ),
@@ -54,14 +73,37 @@ class CartWidget extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ListView.builder(
-                        itemCount: 5,
+                        itemCount: cartState.value!.productList!.length,
                         itemBuilder: (context, index) {
-                          return const ProductCard();
+                          ProductModel product =
+                              cartState.value!.productList![index];
+                          return ProductCard(
+                            product: product,
+                          );
                         }),
                   ),
                 ),
               ),
-              const OrderTotalValue(),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Total: ',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    Text(
+                      'R\$ ${(cartState.value == null) ? 0 : _getTotalValue(cartState)}',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -87,4 +129,14 @@ class CartWidget extends StatelessWidget {
       ),
     );
   }
+  int _getTotalValue(Atom<CartModel?> cartState) {
+    int totalValue = 0;
+
+    for (ProductModel product in cartState.value!.productList!) {
+      totalValue += product.price as int;
+    }
+
+    return totalValue;
+  }
 }
+

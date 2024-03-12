@@ -1,11 +1,14 @@
+import 'dart:math';
+
+import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-  });
+  ProductModel product;
+
+  ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -20,22 +23,20 @@ class ProductCard extends StatelessWidget {
                   height: 100,
                   width: 100,
                   child: Card(
-                    child: Image.network(
-                        color: Colors.blue,
-                        'https://cdn-icons-png.flaticon.com/512/2751/2751071.png'),
+                    child: Image.network(product.imageUrl),
                   ),
                 ),
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Copo Gelado Coca-Cola',
-                    style: TextStyle(fontSize: 18),
+                    product.name,
+                    style: const TextStyle(fontSize: 18),
                   ),
                   Text(
-                    'R\$ 4,76',
-                    style: TextStyle(
+                    'R\$ ${product.price}',
+                    style: const TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
                         fontSize: 18),

@@ -1,4 +1,5 @@
 import 'package:asp/asp.dart';
+import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_item.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,13 @@ class ProductCarousel extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [1, 2]
                   .map((e) => ProductItem(
-                        name: 'teste',
+                        product: ProductModel(
+                          description: '',
+                          id: '',
+                          imageUrl: '',
+                          name: '',
+                          price: 0,
+                        ),
                         onPressed: (index) {},
                       ))
                   .toList(),
@@ -60,7 +67,8 @@ class ProductCarousel extends StatelessWidget {
                     color: (Theme.of(context).brightness == Brightness.dark
                             ? Colors.white
                             : Colors.blue)
-                        .withOpacity(sliderState.value == entry.key ? 0.9 : 0.4)),
+                        .withOpacity(
+                            sliderState.value == entry.key ? 0.9 : 0.4)),
               ),
             );
           }).toList(),
