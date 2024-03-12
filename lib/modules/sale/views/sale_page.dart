@@ -1,4 +1,5 @@
 import 'package:asp/asp.dart';
+import 'package:b2b_mvp/modules/sale/atoms/cart_atoms.dart';
 import 'package:b2b_mvp/modules/sale/reducers/cart_reducer.dart';
 import 'package:b2b_mvp/modules/sale/reducers/product_reducer.dart';
 import 'package:b2b_mvp/modules/sale/sale_controller.dart';
@@ -36,7 +37,7 @@ class _SalePageState extends State<SalePage> {
     // TODO - Remover
     saleController.mockList();
     productReducer.fetchProduct();
-    cartReducer.fetchCard();
+    fetchCard();
   }
 
   @override
@@ -44,7 +45,7 @@ class _SalePageState extends State<SalePage> {
     context.select(() => [
           productReducer.productGridState,
           productReducer.productGridLoadingState,
-          cartReducer.cartState,
+          cartState,
         ]);
     final List<ProductModel> productList =
         productReducer.productGridState.value;
@@ -249,7 +250,7 @@ class _SalePageState extends State<SalePage> {
                 ResponsiveGridView(
                   // childAspectRatio: 1 / 2,
                   onTab: (index) {
-                    cartReducer.addProductToCard.setValue(productList[index]);
+                    addProductToCard.setValue([productList[index]]);
                   },
                   productList: productList,
                 ),
@@ -278,7 +279,7 @@ class _SalePageState extends State<SalePage> {
                 backgroundColor: Colors.white,
                 elevation: 0,
                 onPressed: () {
-                  showCartSheet(context, cartReducer.cartState, cartReducer);
+                  showCartSheet(context, cartState, cartReducer);
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 3, color: Colors.black),
@@ -290,8 +291,8 @@ class _SalePageState extends State<SalePage> {
                 ),
               ),
             ),
-            if (cartReducer.cartState.value != null &&
-                cartReducer.cartState.value!.productList!.isNotEmpty)
+            if (cartState.value != null &&
+                cartState.value!.productList!.isNotEmpty)
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
@@ -300,7 +301,7 @@ class _SalePageState extends State<SalePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                        '${cartReducer.cartState.value!.productList!.length}'),
+                        '${cartState.value!.productList!.length}'),
                   ),
                 ),
               )
@@ -325,9 +326,6 @@ void showCartSheet(
     builder: (BuildContext context) {
       return CartWidget(
         cartState: cartState,
-        removeProductFunction: (products) {
-          cartReducer.removeProductFromCard.setValue(products);
-        },
       );
     },
   );

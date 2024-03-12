@@ -17,8 +17,8 @@ class SaleController {
     return cart;
   }
 
-  Future<bool> addProductToCart(ProductModel product, CartModel cart) async {
-    return await cartRepository.addProducts([product], cart);
+  Future<bool> addProductToCart(List<ProductModel> products, CartModel cart) async {
+    return await cartRepository.addProducts(products, cart);
   }
 
   Future<bool> removeProductFromCart(List<ProductModel> products, CartModel cart) async {

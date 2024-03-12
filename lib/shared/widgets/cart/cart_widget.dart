@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 
 class CartWidget extends StatelessWidget {
   final Atom<CartModel?> cartState;
-  final Function(List<ProductModel>)? removeProductFunction;
 
-  const CartWidget({super.key, required this.cartState, this.removeProductFunction});
+  const CartWidget({super.key, required this.cartState});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +79,6 @@ class CartWidget extends StatelessWidget {
                               cartState.value!.productList![index];
                           return ProductCard(
                             product: product,
-                            removeProductFunction: removeProductFunction,
                           );
                         }),
                   ),
