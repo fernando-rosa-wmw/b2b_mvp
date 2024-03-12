@@ -33,9 +33,28 @@ class ProductItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Stack(
-                  alignment: Alignment.topLeft,
                   children: [
-                    Image.network(product.imageUrl),
+                    Image.network(
+                      product.imageUrl,
+                      loadingBuilder: (context, widget, imageChunk) {
+                        if (imageChunk == null) return widget;
+                        return const SizedBox(
+                            height: 150,
+                            width: 300,
+                            child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
+                        return const SizedBox(
+                            height: 150,
+                            width: 300,
+                            child: Icon(
+                              size: 50,
+                              Icons.error_outline,
+                              color: Colors.red,
+                            ));
+                      },
+                    ),
                     Container(
                       decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: Colors.blue),
