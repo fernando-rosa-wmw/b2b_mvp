@@ -12,7 +12,7 @@ class ProductModel extends HiveObject {
   @HiveField(2)
   final String description;
   @HiveField(3)
-  final double price;
+  final int price;
   @HiveField(4)
   final String imageUrl;
 

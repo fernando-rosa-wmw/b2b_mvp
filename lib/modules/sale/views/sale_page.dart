@@ -5,6 +5,7 @@ import 'package:b2b_mvp/modules/sale/sale_controller.dart';
 import 'package:b2b_mvp/shared/models/cart_model.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/cart/cart.dart';
+import 'package:b2b_mvp/shared/widgets/platform_resolutions.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_carousel.dart';
 import 'package:b2b_mvp/shared/widgets/responsives/responsive_gridview.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_drawer.dart';
@@ -51,24 +52,122 @@ class _SalePageState extends State<SalePage> {
     final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: Center(
-          child: SizedBox(
-              width: 70,
-              child: Image.network(
-                  'https://cdn.shortpixel.ai/spai/w_156+q_lossy+ret_img+to_webp/www.wmw.com.br/wp-content/uploads/2019/05/logotipo-2019-branco.png')),
-        ),
-        backgroundColor: Colors.red,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
+      appBar: (width >= PlatformResolutions.phone_width)
+          ? PreferredSize(
+              preferredSize: const Size.fromHeight(120),
+              child: Container(
+                color: Colors.red,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(
+                            child: Image.network(
+                                'https://cdn.shortpixel.ai/spai/w_156+q_lossy+ret_img+to_webp/www.wmw.com.br/wp-content/uploads/2019/05/logotipo-2019-branco.png'),
+                          ),
+                          const Flexible(
+                            flex: 2,
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(),
+                                  label: Text(
+                                    'Procurar Produtos',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 2,
+                            child: DropdownButton(
+                              hint: Text(
+                                'WMW',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              items: const [
+                                DropdownMenuItem(
+                                  value: 'Cliente',
+                                  child: Text(
+                                    'Cliente',
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Perfil',
+                                  child: Text(
+                                    'Perfil',
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Pedidos',
+                                  child: Text(
+                                    'Pedidos',
+                                  ),
+                                ),
+                              ],
+                              onChanged: (o) {},
+                            ),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.notifications,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'R\$ 0,00',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.shopping_cart_outlined,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : AppBar(
+              iconTheme: const IconThemeData(color: Colors.white),
+              title: Center(
+                child: SizedBox(
+                  width: 70,
+                  child: Image.network(
+                      'https://cdn.shortpixel.ai/spai/w_156+q_lossy+ret_img+to_webp/www.wmw.com.br/wp-content/uploads/2019/05/logotipo-2019-branco.png'),
+                ),
+              ),
+              backgroundColor: Colors.red,
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.search,
+                  ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
       drawer: BaseDrawer(
         selectedIndex: _selectedIndex,
       ),
@@ -148,6 +247,7 @@ class _SalePageState extends State<SalePage> {
             Stack(
               children: [
                 ResponsiveGridView(
+                  // childAspectRatio: 1 / 2,
                   onTab: (index) {
                     cartReducer.addProductToCard.setValue(productList[index]);
                   },
@@ -190,10 +290,11 @@ class _SalePageState extends State<SalePage> {
                 ),
               ),
             ),
-            if (cartReducer.cartState.value != null && cartReducer.cartState.value!.productList!.isNotEmpty)
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
+            if (cartReducer.cartState.value != null &&
+                cartReducer.cartState.value!.productList!.isNotEmpty)
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle, color: Colors.blue),
                   child: Padding(
@@ -202,7 +303,7 @@ class _SalePageState extends State<SalePage> {
                         '${cartReducer.cartState.value!.productList!.length}'),
                   ),
                 ),
-            )
+              )
           ],
         ),
       ),

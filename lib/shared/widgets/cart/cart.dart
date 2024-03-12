@@ -69,7 +69,7 @@ class CartWidget extends StatelessWidget {
                   border: Border.all(color: Colors.grey),
                 ),
                 child: SizedBox(
-                  height: height * .5,
+                  height: height * .4,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ListView.builder(
@@ -133,7 +133,7 @@ class CartWidget extends StatelessWidget {
     int totalValue = 0;
 
     for (ProductModel product in cartState.value!.productList!) {
-      totalValue += product.price as int;
+      totalValue += product.price;
     }
 
     return totalValue;

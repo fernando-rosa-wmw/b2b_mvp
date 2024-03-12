@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +80,7 @@ class ProductItem extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     const FittedBox(

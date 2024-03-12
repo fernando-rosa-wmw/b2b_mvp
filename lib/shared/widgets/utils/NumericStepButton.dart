@@ -7,7 +7,7 @@ class NumericStepButton extends StatefulWidget {
 
   final ValueChanged<int> onChanged;
 
-  NumericStepButton(
+  const NumericStepButton(
       {super.key,
         this.minValue = 0,
         this.maxValue = 10,
@@ -29,11 +29,10 @@ class _NumericStepButtonState extends State<NumericStepButton> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.remove,
               color: Colors.blue,
             ),
-            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
             color: Theme.of(context).primaryColor,
             onPressed: () {
               setState(() {
@@ -47,7 +46,7 @@ class _NumericStepButtonState extends State<NumericStepButton> {
           Text(
             '$counter',
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black87,
               fontWeight: FontWeight.w500,
             ),
@@ -57,7 +56,6 @@ class _NumericStepButtonState extends State<NumericStepButton> {
               Icons.add,
               color: Colors.blue,
             ),
-            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
             color: Theme.of(context).primaryColor,
             onPressed: () {
               setState(() {

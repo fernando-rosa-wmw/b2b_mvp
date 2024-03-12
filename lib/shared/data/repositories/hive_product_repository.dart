@@ -40,7 +40,7 @@ class HiveProductRepository implements ProductRepository {
   Future<List<ProductModel>> getAll() async {
     var box = await Hive.openBox<ProductModel>(boxName);
     try {
-      List<ProductModel> products = box.values.toList() as List<ProductModel>;
+      List<ProductModel> products = box.values.toList();
       return products;
     } catch (e, s) {
       Logger().e(e, stackTrace: s);

@@ -28,7 +28,7 @@ class ResponsiveGridView extends StatelessWidget {
         childAspectRatio: childAspectRatio ??  1 / 1.8,
       ),
       itemCount: productList.length,
-      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       itemBuilder: (context, index) {
         ProductModel item = productList[index];
         return ProductItem(

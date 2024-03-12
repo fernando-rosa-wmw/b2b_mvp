@@ -10,7 +10,7 @@ class AppWidget extends StatelessWidget {
     return RxRoot(
       child: MaterialApp.router(
         routerConfig: Modular.routerConfig,
-        title: 'Flutter Demo',
+        title: 'B2B',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
