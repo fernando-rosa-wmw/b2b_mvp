@@ -6,9 +6,10 @@ import 'package:b2b_mvp/shared/widgets/products/product_card.dart';
 import 'package:flutter/material.dart';
 
 class CartWidget extends StatelessWidget {
-  Atom<CartModel?> cartState;
+  final Atom<CartModel?> cartState;
+  final Function(List<ProductModel>)? removeProductFunction;
 
-  CartWidget({super.key, required this.cartState});
+  const CartWidget({super.key, required this.cartState, this.removeProductFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +80,7 @@ class CartWidget extends StatelessWidget {
                               cartState.value!.productList![index];
                           return ProductCard(
                             product: product,
+                            removeProductFunction: removeProductFunction,
                           );
                         }),
                   ),
@@ -129,14 +131,12 @@ class CartWidget extends StatelessWidget {
       ),
     );
   }
+
   int _getTotalValue(Atom<CartModel?> cartState) {
     int totalValue = 0;
-
     for (ProductModel product in cartState.value!.productList!) {
       totalValue += product.price;
     }
-
     return totalValue;
   }
 }
-

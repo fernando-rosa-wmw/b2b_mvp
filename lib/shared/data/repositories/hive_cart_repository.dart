@@ -105,4 +105,20 @@ class HiveCartRepository implements CartRepository {
     }
     return cart;
   }
+
+  @override
+  Future<bool> removeProducts(List<ProductModel> products, CartModel cardModel) async {
+    await _getBox();
+    try {
+      for (var element in products) {
+        cardModel.productList!.remove(element);
+      }
+      Logger().i('RemoveProductsRepo ${cardModel.toString()}');
+      cardModel.save();
+      return true;
+    } catch (e, s) {
+      Logger().e(e, stackTrace: s);
+      throw Exception(e);
+    }
+  }
 }

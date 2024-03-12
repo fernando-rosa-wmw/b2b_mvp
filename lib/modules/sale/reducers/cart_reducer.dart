@@ -12,6 +12,7 @@ class CartReducer extends Reducer {
 
   //Actions
   final addProductToCard = Atom<ProductModel?>(null);
+  final removeProductFromCard = Atom<List<ProductModel>?>(null);
   final fetchCard = Atom.action();
 
   CartReducer() {
@@ -22,12 +23,23 @@ class CartReducer extends Reducer {
     on(() => [fetchCard], () {
       _fetchCard();
     });
+
+    on(() => [removeProductFromCard], () {
+      _removeProductFromCart();
+    });
   }
 
   void _addProductToCard() async {
     ProductModel product = addProductToCard.value!;
     CartModel cart = cartState.value!;
     await saleController.addProductToCart(product, cart);
+    _fetchCard();
+  }
+
+  void _removeProductFromCart() async {
+    List<ProductModel> products = removeProductFromCard.value!;
+    CartModel cart = cartState.value!;
+    await saleController.removeProductFromCart(products, cart);
     _fetchCard();
   }
 

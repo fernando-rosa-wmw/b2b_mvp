@@ -4,7 +4,7 @@ import 'package:b2b_mvp/modules/sale/reducers/product_reducer.dart';
 import 'package:b2b_mvp/modules/sale/sale_controller.dart';
 import 'package:b2b_mvp/shared/models/cart_model.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
-import 'package:b2b_mvp/shared/widgets/cart/cart.dart';
+import 'package:b2b_mvp/shared/widgets/cart/cart_widget.dart';
 import 'package:b2b_mvp/shared/widgets/platform_resolutions.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_carousel.dart';
 import 'package:b2b_mvp/shared/widgets/responsives/responsive_gridview.dart';
@@ -278,7 +278,7 @@ class _SalePageState extends State<SalePage> {
                 backgroundColor: Colors.white,
                 elevation: 0,
                 onPressed: () {
-                  showCartSheet(context, cartReducer.cartState);
+                  showCartSheet(context, cartReducer.cartState, cartReducer);
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 3, color: Colors.black),
@@ -317,13 +317,17 @@ class _SalePageState extends State<SalePage> {
   }
 }
 
-void showCartSheet(BuildContext context, Atom<CartModel?> cartState) {
+void showCartSheet(
+    BuildContext context, Atom<CartModel?> cartState, CartReducer cartReducer) {
   showModalBottomSheet<void>(
     isScrollControlled: true,
     context: context,
     builder: (BuildContext context) {
       return CartWidget(
         cartState: cartState,
+        removeProductFunction: (products) {
+          cartReducer.removeProductFromCard.setValue(products);
+        },
       );
     },
   );

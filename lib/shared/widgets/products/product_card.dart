@@ -1,14 +1,13 @@
-import 'dart:math';
-
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  ProductModel product;
+  final ProductModel product;
+  final Function(List<ProductModel>)? removeProductFunction;
 
-  ProductCard({super.key, required this.product});
+  const ProductCard({super.key, required this.product, this.removeProductFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +73,11 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (removeProductFunction != null) {
+                      removeProductFunction!([product]);
+                    }
+                  },
                   icon: const Icon(
                     CupertinoIcons.trash,
                     color: Colors.red,
