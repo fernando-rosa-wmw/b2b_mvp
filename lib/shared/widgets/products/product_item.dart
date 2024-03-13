@@ -1,11 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProductItem extends StatelessWidget {
-  final Function(int) onPressed;
+  final Function(int) onButtonPressed;
+  final Function onCardPressed;
   final ProductModel product;
   final int? index;
   final double? width;
@@ -13,7 +12,8 @@ class ProductItem extends StatelessWidget {
 
   const ProductItem({
     super.key,
-    required this.onPressed,
+    required this.onButtonPressed,
+    required this.onCardPressed,
     required this.product,
     this.index,
     this.height,
@@ -37,7 +37,7 @@ class ProductItem extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: InkWell(
             onTap: () {
-              onPressed(index!);
+              onCardPressed();
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -130,7 +130,9 @@ class ProductItem extends StatelessWidget {
                               color: Colors.blue),
                         ),
                         ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            onButtonPressed(index!);
+                          },
                           style: ElevatedButton.styleFrom(
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(

@@ -2,6 +2,7 @@
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class ResponsiveGridView extends StatelessWidget {
 
@@ -33,8 +34,11 @@ class ResponsiveGridView extends StatelessWidget {
         ProductModel item = productList[index];
         return ProductItem(
           index: index,
-          onPressed: (index) {
+          onButtonPressed: (index) {
             onTab(index);
+          },
+          onCardPressed: () {
+            Modular.to.navigate('product_details');
           },
           product: item,
         );

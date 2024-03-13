@@ -37,8 +37,7 @@ class ProductCarousel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [1, 2]
-                  .map((e) =>
-                  ProductItem(
+                  .map((e) => ProductItem(
                         width: 225,
                         product: ProductModel(
                           description: 'Banner',
@@ -48,7 +47,8 @@ class ProductCarousel extends StatelessWidget {
                           price: 0,
                           quantity: 0,
                         ),
-                        onPressed: (index) {},
+                        onButtonPressed: (index) {},
+                        onCardPressed: (index) {},
                       ))
                   .toList(),
             );
