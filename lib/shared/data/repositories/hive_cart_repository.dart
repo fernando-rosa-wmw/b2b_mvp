@@ -10,6 +10,8 @@ class HiveCartRepository implements CartRepository {
   _getBox() async {
     if (!Hive.isBoxOpen(boxName)) {
       return await Hive.openBox<CartModel>(boxName);
+    } else {
+      return Hive.box<CartModel>(boxName);
     }
   }
 
@@ -74,20 +76,6 @@ class HiveCartRepository implements CartRepository {
   }
 
   @override
-  Future<bool> addProducts(List<ProductModel> products, CartModel cardModel) async {
-    await _getBox();
-    try {
-      cardModel.productList!.addAll(products);
-      Logger().i('addProductsRepo ${cardModel.toString()}');
-      cardModel.save();
-      return true;
-    } catch (e, s) {
-      Logger().e(e, stackTrace: s);
-      throw Exception(e);
-    }
-  }
-
-  @override
   Future<CartModel> getOne() async {
     var box = await Hive.openBox<CartModel>(boxName);
     var productBox = await Hive.openBox<ProductModel>('HiveProductRepository');
@@ -107,12 +95,67 @@ class HiveCartRepository implements CartRepository {
   }
 
   @override
-  Future<bool> removeProducts(List<ProductModel> products, CartModel cardModel) async {
+  Future<bool> addProduct(ProductModel product, CartModel cardModel) async {
     await _getBox();
     try {
-      for (var element in products) {
-        cardModel.productList!.remove(element);
+      if (contains(cardModel, product)) {
+        cardModel.productList!.firstWhere((element) => element.key == product.key).quantity += 1;
+      } else {
+        product.quantity += 1;
+        cardModel.productList!.add(product);
       }
+
+      Logger().i('addProductsRepo ${cardModel.toString()}');
+      cardModel.save();
+      return true;
+    } catch (e, s) {
+      Logger().e(e, stackTrace: s);
+      throw Exception(e);
+    }
+  }
+
+  bool contains(CartModel cardModel, ProductModel product) {
+    bool contains = false;
+    for (ProductModel productModel in cardModel.productList!) {
+      if (productModel.key == product.key) {
+        contains = true;
+      }
+    }
+    return contains;
+  }
+
+  @override
+  Future<bool> removeProduct(ProductModel product, CartModel cardModel) async {
+    final Box box = await _getBox();
+    try {
+      if (contains(cardModel, product)) {
+        cardModel.productList!.firstWhere((element) => element.key == product.key).quantity -= 1;
+        cardModel.save();
+        box.flush();
+      }
+
+      if (cardModel.productList!.firstWhere((element) => element.key == product.key).quantity == 0) {
+        cardModel.productList!.remove(product);
+        box.flush();
+      }
+
+      Logger().i('RemoveProductsRepo ${cardModel.toString()}');
+      cardModel.save();
+      box.flush();
+      return true;
+    } catch (e, s) {
+      Logger().e(e, stackTrace: s);
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<bool> removeAllProducts(ProductModel product, CartModel cardModel) async {
+    await _getBox();
+    try {
+      product.quantity = 0;
+      cardModel.productList!.remove(product);
+
       Logger().i('RemoveProductsRepo ${cardModel.toString()}');
       cardModel.save();
       return true;

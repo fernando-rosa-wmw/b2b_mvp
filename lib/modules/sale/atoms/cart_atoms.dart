@@ -7,6 +7,7 @@ final cartState = Atom<CartModel?>(null);
 final categoryList = ['Eletronicos', 'Casa', 'Banho'];
 
 //Actions
-final addProductToCard = Atom<List<ProductModel>?>(null);
-final removeProductFromCard = Atom<List<ProductModel>?>(null);
+final addProductToCard = Atom<ProductModel?>(null);
+final removeProductFromCard = Atom<ProductModel?>(null);
+final removeAllProductsFromCard = Atom<ProductModel?>(null);
 final fetchCard = Atom.action();

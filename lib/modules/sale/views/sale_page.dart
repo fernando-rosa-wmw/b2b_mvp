@@ -139,7 +139,7 @@ class _SalePageState extends State<SalePage> {
                 ResponsiveGridView(
                   // childAspectRatio: 1 / 2,
                   onTab: (index) {
-                    addProductToCard.setValue([productList[index]]);
+                    addProductToCard.setValue(productList[index]);
                   },
                   productList: productList,
                 ),

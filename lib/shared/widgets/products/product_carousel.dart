@@ -40,10 +40,11 @@ class ProductCarousel extends StatelessWidget {
                   .map((e) => ProductItem(
                         product: ProductModel(
                           description: 'Banner',
-                          id: 'Banner',
+                          id: 0,
                           imageUrl: '',
                           name: 'Banner',
                           price: 0,
+                          quantity: 0,
                         ),
                         onPressed: (index) {},
                       ))

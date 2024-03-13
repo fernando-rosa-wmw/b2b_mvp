@@ -75,8 +75,7 @@ class CartWidget extends StatelessWidget {
                     child: ListView.builder(
                         itemCount: cartState.value!.productList!.length,
                         itemBuilder: (context, index) {
-                          ProductModel product =
-                              cartState.value!.productList![index];
+                          ProductModel product = cartState.value!.productList![index];
                           return ProductCard(
                             product: product,
                           );
@@ -85,17 +84,17 @@ class CartWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
+                    const Text(
                       'Total: ',
                       style: TextStyle(fontSize: 17),
                     ),
                     Text(
                       'R\$ ${(cartState.value == null) ? 0 : _getTotalValue(cartState)}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,

@@ -13,13 +13,16 @@ class HiveProductRepository implements ProductRepository {
     var box = await Hive.openBox<ProductModel>(boxName);
     if (box.values.toList().isEmpty) {
       List<ProductModel> list = List<ProductModel>.generate(
-          15,
-          (index) => ProductModel(
-              id: 'id',
-              name: 'Trident $index',
-              description: 'description',
-              price: index + 10,
-              imageUrl: 'https://cdn-icons-png.flaticon.com/512/2751/275107${Random.secure().nextInt(10)}.png'));
+        15,
+        (index) => ProductModel(
+          id: index,
+          name: 'Trident $index',
+          description: 'description',
+          price: index + 10,
+          imageUrl: 'https://cdn-icons-png.flaticon.com/512/2751/275107${Random.secure().nextInt(10)}.png',
+          quantity: 0,
+        ),
+      );
       await box.addAll(list);
     }
   }

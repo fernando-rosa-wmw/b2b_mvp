@@ -20,19 +20,30 @@ class CartReducer extends Reducer {
     on(() => [removeProductFromCard], () {
       _removeProductFromCart();
     });
+
+    on(() => [removeAllProductsFromCard], () {
+      _removeAllProductsFromCart();
+    });
   }
 
   void _addProductToCard() async {
-    List<ProductModel> products = addProductToCard.value!;
+    ProductModel product = addProductToCard.value!;
     CartModel cart = cartState.value!;
-    await saleController.addProductToCart(products, cart);
+    await saleController.addProductToCart(product, cart);
     _fetchCard();
   }
 
   void _removeProductFromCart() async {
-    List<ProductModel> products = removeProductFromCard.value!;
+    ProductModel product = removeProductFromCard.value!;
     CartModel cart = cartState.value!;
-    await saleController.removeProductFromCart(products, cart);
+    await saleController.removeProductFromCart(product, cart);
+    _fetchCard();
+  }
+
+  void _removeAllProductsFromCart() async {
+    ProductModel product = removeAllProductsFromCard.value!;
+    CartModel cart = cartState.value!;
+    await saleController.removeAllProductsFromCart(product, cart);
     _fetchCard();
   }
 

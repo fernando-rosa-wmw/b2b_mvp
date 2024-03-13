@@ -9,7 +9,7 @@ class CartModel extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
-  HiveList<ProductModel>? productList;
+  List<ProductModel>? productList;
   @HiveField(2)
   final String name;
   @HiveField(3)

@@ -17,11 +17,15 @@ class SaleController {
     return cart;
   }
 
-  Future<bool> addProductToCart(List<ProductModel> products, CartModel cart) async {
-    return await cartRepository.addProducts(products, cart);
+  Future<bool> addProductToCart(ProductModel product, CartModel cart) async {
+    return await cartRepository.addProduct(product, cart);
   }
 
-  Future<bool> removeProductFromCart(List<ProductModel> products, CartModel cart) async {
-    return await cartRepository.removeProducts(products, cart);
+  Future<bool> removeProductFromCart(ProductModel product, CartModel cart) async {
+    return await cartRepository.removeProduct(product, cart);
+  }
+
+  Future<bool> removeAllProductsFromCart(ProductModel product, CartModel cart) async {
+    return await cartRepository.removeAllProducts(product, cart);
   }
 }

@@ -54,7 +54,13 @@ class ProductCard extends StatelessWidget {
                   children: [
                     const Text('Quantidade'),
                     NumericStepButton(
-                      onChanged: (int) {},
+                      counter: product.quantity,
+                      onAddChanged: () {
+                        addProductToCard.setValue(product);
+                      },
+                      onRemoveChanged: () {
+                        removeProductFromCard.setValue(product);
+                      },
                     )
                   ],
                 ),
@@ -74,7 +80,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    removeProductFromCard.setValue([product]);
+                    removeAllProductsFromCard.setValue(product);
                   },
                   icon: const Icon(
                     CupertinoIcons.trash,

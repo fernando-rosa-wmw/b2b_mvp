@@ -103,7 +103,10 @@ class ProductItem extends StatelessWidget {
                             color: Colors.blue),
                       ),
                     ),
-                    NumericStepButton(onChanged: (i) {}),
+                    NumericStepButton(
+                      onAddChanged: () {},
+                      onRemoveChanged: () {},
+                    ),
                   ],
                 ),
               ),

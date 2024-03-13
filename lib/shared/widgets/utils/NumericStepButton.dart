@@ -1,17 +1,21 @@
-
 import 'package:flutter/material.dart';
 
 class NumericStepButton extends StatefulWidget {
   final int minValue;
   final int maxValue;
+  final int? counter;
 
-  final ValueChanged<int> onChanged;
+  final Function onAddChanged;
+  final Function onRemoveChanged;
 
-  const NumericStepButton(
-      {super.key,
-        this.minValue = 0,
-        this.maxValue = 10,
-        required this.onChanged});
+  const NumericStepButton({
+    super.key,
+    this.minValue = 0,
+    this.maxValue = 10,
+    this.counter,
+    required this.onAddChanged,
+    required this.onRemoveChanged,
+  });
 
   @override
   State<NumericStepButton> createState() {
@@ -20,10 +24,9 @@ class NumericStepButton extends StatefulWidget {
 }
 
 class _NumericStepButtonState extends State<NumericStepButton> {
-  int counter = 0;
-
   @override
   Widget build(BuildContext context) {
+    int counter = widget.counter ?? 0;
     return Card.outlined(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -35,12 +38,7 @@ class _NumericStepButtonState extends State<NumericStepButton> {
             ),
             color: Theme.of(context).primaryColor,
             onPressed: () {
-              setState(() {
-                if (counter > widget.minValue) {
-                  counter--;
-                }
-                widget.onChanged(counter);
-              });
+              widget.onRemoveChanged();
             },
           ),
           Text(
@@ -58,12 +56,7 @@ class _NumericStepButtonState extends State<NumericStepButton> {
             ),
             color: Theme.of(context).primaryColor,
             onPressed: () {
-              setState(() {
-                if (counter < widget.maxValue) {
-                  counter++;
-                }
-                widget.onChanged(counter);
-              });
+              widget.onAddChanged();
             },
           ),
         ],
