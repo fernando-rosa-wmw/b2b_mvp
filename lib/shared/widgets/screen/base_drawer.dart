@@ -1,5 +1,7 @@
 import 'package:b2b_mvp/modules/auth/auth_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BaseDrawer extends StatelessWidget {
@@ -14,8 +16,7 @@ class BaseDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthController authController = Modular.get();
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+      child: Column(
         children: [
           Stack(
             children: <Widget>[
@@ -58,32 +59,29 @@ class BaseDrawer extends StatelessWidget {
               )
             ],
           ),
-          ListTile(
-            leading: Icon(Icons.home_outlined),
-            title: const Text('Home'),
-            selected: _selectedIndex == 0,
-            onTap: () {
-              // Routefly.navigate(routePaths.home);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.task_alt_outlined),
-            title: const Text('Perfil'),
-            selected: _selectedIndex == 1,
-            onTap: () {
-              // Routefly.navigate(routePaths.task.path);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('Logout'),
-            selected: _selectedIndex == 2,
-            onTap: () {
-              authController.disconnect();
-            },
+          Flexible(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: generateTileList(authController),
+            ),
           ),
         ],
       ),
     );
+  }
+
+  List<Widget> generateTileList(AuthController authController) {
+    var list = ['Eletronicos', 'Casa', 'Banho'];
+    return list
+      .map(
+        (e) => ListTile(
+          leading: const Icon(Icons.home_outlined),
+          title: Text(e),
+          selected: _selectedIndex == list.indexOf(e),
+          onTap: () {
+            // Routefly.navigate(routePaths.home);
+          },
+        ),
+      ).toList();
   }
 }

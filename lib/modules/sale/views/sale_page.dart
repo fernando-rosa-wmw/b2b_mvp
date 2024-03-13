@@ -304,8 +304,7 @@ class _SalePageState extends State<SalePage> {
                       shape: BoxShape.circle, color: Colors.blue),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                        '${cartState.value!.productList!.length}'),
+                    child: Text('${cartState.value!.productList!.length}'),
                   ),
                 ),
               )
