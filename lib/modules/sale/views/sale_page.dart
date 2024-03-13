@@ -140,6 +140,7 @@ class _SalePageState extends State<SalePage> {
                   onTab: (index) {
                     addProductToCard.setValue(productList[index]);},
                   productList: productList,
+                  crossAxisCount: (width > 1000) ? 6 : null,
                 ),
                 if (productReducer.productGridLoadingState.value)
                   const Align(

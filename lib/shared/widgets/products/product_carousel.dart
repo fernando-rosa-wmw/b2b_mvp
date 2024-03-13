@@ -38,7 +38,7 @@ class ProductCarousel extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [1, 2]
                   .map((e) => ProductItem(
-                        width: 225,
+                        width: 175,
                         product: ProductModel(
                           description: 'Banner',
                           id: 0,

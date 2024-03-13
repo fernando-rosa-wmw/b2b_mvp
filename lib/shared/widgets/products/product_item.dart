@@ -96,28 +96,29 @@ class ProductItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: SizedBox(
-                      child: AutoSizeText(
-                        product.name,
-                        textAlign: TextAlign.center,
-                        wrapWords: true,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SizedBox(
+                    child: AutoSizeText(
+                      product.name,
+                      textAlign: TextAlign.center,
+                      wrapWords: true,
+                      maxFontSize: 24,
+                      minFontSize: 10,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: width ?? 300,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       AutoSizeText(
                         '${product.price}',
@@ -135,26 +136,24 @@ class ProductItem extends StatelessWidget {
                           color: Colors.blue,
                         ),
                       ),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          onButtonPressed(index!);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(9),
+                      SizedBox(
+                        width: 250,
+                        child: IconButton(
+                          onPressed: () {
+                            onButtonPressed(index!);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(9),
+                              ),
                             ),
+                            backgroundColor: Colors.blue,
                           ),
-                          backgroundColor: Colors.blue,
-                        ),
-                        icon: const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                        ),
-                        label: const AutoSizeText(
-                          'Adicionar ao Carrinho',
-                          maxLines: 1,
-                          style: TextStyle(color: Colors.white),
+                          icon: const Icon(
+                            Icons.add_shopping_cart_outlined,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
