@@ -1,4 +1,5 @@
 import 'package:b2b_mvp/modules/auth/auth_controller.dart';
+import 'package:b2b_mvp/modules/sale/atoms/cart_atoms.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -71,7 +72,7 @@ class BaseDrawer extends StatelessWidget {
   }
 
   List<Widget> generateTileList(AuthController authController) {
-    var list = ['Eletronicos', 'Casa', 'Banho'];
+    var list = categoryList;
     return list
       .map(
         (e) => ListTile(

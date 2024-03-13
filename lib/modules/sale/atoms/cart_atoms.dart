@@ -4,6 +4,7 @@ import '../../../shared/models/product_model.dart';
 
 //Atoms
 final cartState = Atom<CartModel?>(null);
+final categoryList = ['Eletronicos', 'Casa', 'Banho'];
 
 //Actions
 final addProductToCard = Atom<List<ProductModel>?>(null);
