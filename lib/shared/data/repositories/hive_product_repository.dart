@@ -16,7 +16,7 @@ class HiveProductRepository implements ProductRepository {
         15,
         (index) => ProductModel(
           id: index,
-          name: 'Trident $index',
+          name: 'Trident Muito bom duas linhas $index',
           description: 'description',
           price: index + 10,
           imageUrl: 'https://cdn-icons-png.flaticon.com/512/2751/275107${Random.secure().nextInt(10)}.png',

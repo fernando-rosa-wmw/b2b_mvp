@@ -37,12 +37,14 @@ class ProductCarousel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [1, 2]
-                  .map((e) => ProductItem(
+                  .map((e) =>
+                  ProductItem(
+                        width: 225,
                         product: ProductModel(
                           description: 'Banner',
                           id: 0,
                           imageUrl: '',
-                          name: 'Banner',
+                          name: 'Tridendete muiot bom duas linhas',
                           price: 0,
                           quantity: 0,
                         ),

@@ -24,8 +24,8 @@ class ResponsiveGridView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount ?? (MediaQuery.of(context).size.width ~/ 175).toInt(),
-        childAspectRatio: childAspectRatio ??  1 / 1.8,
+        crossAxisCount: crossAxisCount ?? (MediaQuery.of(context).size.width ~/ 250).toInt(),
+        childAspectRatio: childAspectRatio ??  1 / 1.5,
       ),
       itemCount: productList.length,
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
