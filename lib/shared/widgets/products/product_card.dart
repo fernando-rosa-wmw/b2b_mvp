@@ -64,15 +64,15 @@ class ProductCard extends StatelessWidget {
                     )
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Subtotal'),
+                      const Text('Subtotal'),
                       Text(
-                        'R\$ 4,76',
-                        style: TextStyle(
+                        '${product.price * product.quantity}',
+                        style: const TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
                     ],

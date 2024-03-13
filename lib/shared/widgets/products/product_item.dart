@@ -47,54 +47,50 @@ class ProductItem extends StatelessWidget {
                   flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: Flexible(
-                      flex: 3,
-                      child: Stack(
-                        children: [
-                          Card.outlined(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(9),
-                              ),
+                    child: Stack(
+                      children: [
+                        Card.outlined(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(9),
                             ),
-                            child: SizedBox(
-                              child: Image.network(
-                                width: 250,
-                                height: 250,
-                                product.imageUrl,
-                                loadingBuilder: (context, widget, imageChunk) {
-                                  if (imageChunk == null) return widget;
-                                  return const CircularProgressIndicator();
-                                },
-                                errorBuilder: (context, exception, _) {
-                                  return SizedBox(
-                                    width: 250,
-                                    height: 250,
-
-                                    child: Icon(
-                                      Icons.image_not_supported_outlined,
-                                      color: Colors.red,
-                                      size: 200,
-                                    ),
-                                  );
-                                },
+                          ),
+                          child: SizedBox(
+                            child: Image.network(
+                              width: 250,
+                              height: 250,
+                              product.imageUrl,
+                              loadingBuilder: (context, widget, imageChunk) {
+                                if (imageChunk == null) return widget;
+                                return const CircularProgressIndicator();
+                              },
+                              errorBuilder: (context, exception, _) {
+                                return const SizedBox(
+                                  width: 250,
+                                  height: 250,
+                                  child: Icon(
+                                    Icons.image_not_supported_outlined,
+                                    color: Colors.red,
+                                    size: 200,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        if (product.id.isEven)
+                          Container(
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.blue),
+                            child: const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: Icon(
+                                Icons.percent_outlined,
+                                color: Colors.white,
                               ),
                             ),
                           ),
-                          if (product.id.isEven)
-                            Container(
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.blue),
-                              child: const Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: Icon(
-                                  Icons.percent_outlined,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
+                      ],
                     ),
                   ),
                 ),

@@ -60,7 +60,7 @@ class CartWidget extends StatelessWidget {
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 17),
-                        'Produtos selecionado (${(cartState.value == null) ? 0 : cartState.value!.productList!.length})'),
+                        'Produtos selecionado (${(cartState.value == null) ? 0 : _countProducts()})'),
                   ),
                 ),
               ),
@@ -127,6 +127,16 @@ class CartWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  int _countProducts() {
+    int count = 0;
+    if (cartState.value!.productList != null || cartState.value!.productList!.isNotEmpty) {
+      for (final ProductModel(:quantity) in cartState.value!.productList!) {
+        count += quantity;
+      }
+    }
+    return count;
   }
 
   int _getTotalValue(Atom<CartModel?> cartState) {
