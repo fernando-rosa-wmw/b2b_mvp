@@ -279,7 +279,11 @@ class _SalePageState extends State<SalePage> {
                 backgroundColor: Colors.white,
                 elevation: 0,
                 onPressed: () {
-                  showCartSheet(context, cartState, cartReducer);
+                  if (width >= PlatformResolutions.phone_width) {
+                    Modular.to.navigate('cart');
+                  } else {
+                    showCartSheet(context, cartState, cartReducer);
+                  }
                 },
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 3, color: Colors.black),
