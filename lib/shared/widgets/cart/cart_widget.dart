@@ -46,42 +46,42 @@ class CartWidget extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                height: 32,
-                width: width,
-                decoration: const BoxDecoration(color: Colors.blue),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
                         textAlign: TextAlign.start,
                         style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                        'Produtos selecionado (${(cartState.value == null) ? 0 : _countProducts()})'),
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
+                        'Produtos selecionados (${(cartState.value == null) ? 0 : _countProducts()})',
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: SizedBox(
-                  height: height * .4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ListView.builder(
-                        itemCount: cartState.value!.productList!.length,
-                        itemBuilder: (context, index) {
-                          ProductModel product = cartState.value!.productList![index];
-                          return ProductCard(
-                            product: product,
-                          );
-                        }),
+                  Card.filled(
+                    child: SizedBox(
+                      height: height * .4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ListView.builder(
+                          itemCount: cartState.value!.productList!.length,
+                          itemBuilder: (context, index) {
+                            ProductModel product =
+                                cartState.value!.productList![index];
+                            return ProductCard(
+                              product: product,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -105,7 +105,11 @@ class CartWidget extends StatelessWidget {
               ),
               const TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(9),
+                    ),
+                  ),
                   labelText: 'CUPOM',
                 ),
               ),
@@ -117,9 +121,20 @@ class CartWidget extends StatelessWidget {
                 width: width,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: const RoundedRectangleBorder()),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(9),
+                      ),
+                    ),
+                    backgroundColor: Colors.blue,
+                  ),
                   onPressed: () {},
-                  child: const Text('VALIDATOR CUPOM'),
+                  child: const Text(
+                    'VALIDATOR CUPOM',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               )
             ],
@@ -131,7 +146,8 @@ class CartWidget extends StatelessWidget {
 
   int _countProducts() {
     int count = 0;
-    if (cartState.value!.productList != null || cartState.value!.productList!.isNotEmpty) {
+    if (cartState.value!.productList != null ||
+        cartState.value!.productList!.isNotEmpty) {
       for (final ProductModel(:quantity) in cartState.value!.productList!) {
         count += quantity;
       }
@@ -141,8 +157,8 @@ class CartWidget extends StatelessWidget {
 
   int _getTotalValue(Atom<CartModel?> cartState) {
     int totalValue = 0;
-    for (ProductModel product in cartState.value!.productList!) {
-      totalValue += product.price;
+    for (final ProductModel(:quantity, :price) in cartState.value!.productList!) {
+      totalValue += price * quantity;
     }
     return totalValue;
   }

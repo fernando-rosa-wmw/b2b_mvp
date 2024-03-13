@@ -138,8 +138,7 @@ class _SalePageState extends State<SalePage> {
               children: [
                 ResponsiveGridView(
                   onTab: (index) {
-                    addProductToCard.setValue(productList[index]);
-                  },
+                    addProductToCard.setValue(productList[index]);},
                   productList: productList,
                 ),
                 if (productReducer.productGridLoadingState.value)

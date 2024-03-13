@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ProductItem extends StatelessWidget {
   final Function(int) onButtonPressed;
@@ -40,8 +42,9 @@ class ProductItem extends StatelessWidget {
               onCardPressed();
             },
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Flexible(
                   flex: 2,
@@ -71,7 +74,7 @@ class ProductItem extends StatelessWidget {
                                   child: Icon(
                                     Icons.image_not_supported_outlined,
                                     color: Colors.red,
-                                    size: 200,
+                                    size: 100,
                                   ),
                                 );
                               },
@@ -80,8 +83,7 @@ class ProductItem extends StatelessWidget {
                         ),
                         if (product.id.isEven)
                           Container(
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.blue),
+                            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
                             child: const Padding(
                               padding: EdgeInsets.all(4.0),
                               child: Icon(
@@ -94,65 +96,68 @@ class ProductItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: AutoSizeText(
-                    product.name,
-                    minFontSize: 8,
-                    softWrap: true,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.bold),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: SizedBox(
+                      child: AutoSizeText(
+                        product.name,
+                        textAlign: TextAlign.center,
+                        wrapWords: true,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
                 ),
-                Flexible(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          '${product.price}',
-                          style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.blue),
+                SizedBox(
+                  width: width ?? 300,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      AutoSizeText(
+                        '${product.price}',
+                        minFontSize: 12,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.blue,
                         ),
-                        Text(
-                          '${product.price}',
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.blue),
+                      ),
+                      AutoSizeText(
+                        '${product.price}',
+                        minFontSize: 16,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w900,
+                          color: Colors.blue,
                         ),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            onButtonPressed(index!);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(9),
-                              ),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          onButtonPressed(index!);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(9),
                             ),
-                            backgroundColor: Colors.blue,
                           ),
-                          icon: const Icon(
-                            Icons.shopping_cart_outlined,
-                            color: Colors.white,
-                          ),
-                          label: const AutoSizeText(
-                            'Adicionar ao Carrinho',
-                            maxLines: 1,
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          backgroundColor: Colors.blue,
                         ),
-                      ],
-                    ),
+                        icon: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.white,
+                        ),
+                        label: const AutoSizeText(
+                          'Adicionar ao Carrinho',
+                          maxLines: 1,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
