@@ -1,4 +1,5 @@
 import 'package:asp/asp.dart';
+import 'package:b2b_mvp/modules/sale/atoms/cart_atoms.dart';
 import 'package:b2b_mvp/shared/format.dart';
 import 'package:b2b_mvp/shared/models/cart_model.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
@@ -7,9 +8,7 @@ import 'package:b2b_mvp/shared/widgets/products/product_card.dart';
 import 'package:flutter/material.dart';
 
 class CartWidget extends StatelessWidget {
-  final Atom<CartModel?> cartState;
-
-  const CartWidget({super.key, required this.cartState});
+  const CartWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +70,9 @@ class CartWidget extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ListView.builder(
-                          itemCount: cartState.value!.productList!.length,
+                          itemCount: (cartState.value != null) ? cartState.value!.productList!.length : 0,
                           itemBuilder: (context, index) {
-                            ProductModel product =
-                                cartState.value!.productList![index];
+                            ProductModel product = cartState.value!.productList![index];
                             return ProductCard(
                               product: product,
                             );
