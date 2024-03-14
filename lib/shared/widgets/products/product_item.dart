@@ -1,8 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProductItem extends StatelessWidget {
   final Function(int) onButtonPressed;
@@ -104,9 +102,8 @@ class ProductItem extends StatelessWidget {
                       textAlign: TextAlign.center,
                       wrapWords: true,
                       maxFontSize: 24,
-                      minFontSize: 10,
+                      minFontSize: 12,
                       style: const TextStyle(
-                        fontSize: 10,
                         fontWeight: FontWeight.bold,
                       ),
                       maxLines: 2,
