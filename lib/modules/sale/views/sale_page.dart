@@ -49,8 +49,8 @@ class _SalePageState extends State<SalePage> {
           productReducer.productGridLoadingState,
           cartState,
         ]);
-    final List<ProductModel> productList =
-        productReducer.productGridState.value;
+
+    final List<ProductModel> productList = productReducer.productGridState.value;
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
 

@@ -1,8 +1,9 @@
 import 'package:b2b_mvp/shared/data/hive_types.dart';
+import 'package:b2b_mvp/shared/format.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 part 'product_model.g.dart';
-
 @HiveType(typeId: HiveTypes.productTypeId)
 class ProductModel extends HiveObject {
   @HiveField(0)
@@ -26,6 +27,10 @@ class ProductModel extends HiveObject {
     required this.imageUrl,
     this.quantity = 0,
   });
+
+  String get formattedPrice {
+    return formatCurrency(price);
+  }
 
   @override
   String toString() {

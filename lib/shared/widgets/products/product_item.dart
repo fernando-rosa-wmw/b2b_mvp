@@ -118,7 +118,7 @@ class ProductItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       AutoSizeText(
-                        '${product.price}',
+                        product.formattedPrice,
                         minFontSize: 12,
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -126,7 +126,7 @@ class ProductItem extends StatelessWidget {
                         ),
                       ),
                       AutoSizeText(
-                        '${product.price}',
+                        product.formattedPrice,
                         minFontSize: 16,
                         style: const TextStyle(
                           fontWeight: FontWeight.w900,

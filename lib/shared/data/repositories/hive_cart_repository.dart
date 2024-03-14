@@ -78,7 +78,6 @@ class HiveCartRepository implements CartRepository {
   @override
   Future<CartModel> getOne() async {
     var box = await Hive.openBox<CartModel>(boxName);
-    var productBox = await Hive.openBox<ProductModel>('HiveProductRepository');
     CartModel? cart = box.values.lastOrNull;
 
     if (cart == null) {
@@ -87,7 +86,7 @@ class HiveCartRepository implements CartRepository {
           name: 'generated',
           quantity: 0,
           price: 0,
-          productList: HiveList(productBox));
+          productList: []);
       box.add(cart);
       box.flush();
     }

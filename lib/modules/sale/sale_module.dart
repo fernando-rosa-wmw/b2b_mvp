@@ -15,6 +15,7 @@ class SaleModule extends Module {
   void binds(Injector i) {
     i.add(SaleController.new);
     i.add<ProductRepository>(HiveProductRepository.new);
+    // Remover apenas para mockar
     i.add(HiveProductRepository.new);
     i.add<CartRepository>(HiveCartRepository.new);
     i.addSingleton(ProductReducer.new);

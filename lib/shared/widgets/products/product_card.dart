@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:b2b_mvp/modules/sale/atoms/cart_atoms.dart';
+import 'package:b2b_mvp/shared/format.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,7 +42,7 @@ class ProductCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'R\$ ${product.price}',
+                        product.formattedPrice,
                         style: const TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,
@@ -78,8 +79,7 @@ class ProductCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text('Subtotal'),
-                        Text(
-                          '${product.price * product.quantity}',
+                        Text(formatCurrency(product.price * product.quantity),
                           style: const TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.bold),
                         ),

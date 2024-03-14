@@ -1,4 +1,5 @@
 import 'package:asp/asp.dart';
+import 'package:b2b_mvp/shared/format.dart';
 import 'package:b2b_mvp/shared/models/cart_model.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/cart/order_status_indicator.dart';
@@ -93,8 +94,7 @@ class CartWidget extends StatelessWidget {
                       'Total: ',
                       style: TextStyle(fontSize: 17),
                     ),
-                    Text(
-                      'R\$ ${(cartState.value == null) ? 0 : _getTotalValue(cartState)}',
+                    Text(formatCurrency((cartState.value == null) ? 0 : _getTotalValue(cartState)),
                       style: const TextStyle(
                         fontSize: 22,
                         color: Colors.blue,
