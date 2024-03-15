@@ -37,7 +37,7 @@ class ResponsiveGridView extends StatelessWidget {
             onTab(index);
           },
           onCardPressed: () {
-            Modular.to.pushNamed('product_details');
+            Modular.to.pushNamed('product_details/${item.id}');
           },
           product: item,
         );

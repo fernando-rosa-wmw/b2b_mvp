@@ -86,4 +86,16 @@ class HiveProductRepository implements ProductRepository {
       return product;
     }
   }
+
+  @override
+  Future<ProductModel> getOne(int id) async {
+    var box = await Hive.openBox<ProductModel>(boxName);
+    try {
+      ProductModel products = box.get(id)!;
+      return products;
+    } catch (e, s) {
+      Logger().e(e, stackTrace: s);
+      throw Exception(e);
+    }
+  }
 }

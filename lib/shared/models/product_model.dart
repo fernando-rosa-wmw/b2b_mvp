@@ -1,7 +1,6 @@
 import 'package:b2b_mvp/shared/data/hive_types.dart';
 import 'package:b2b_mvp/shared/format.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 part 'product_model.g.dart';
 @HiveType(typeId: HiveTypes.productTypeId)

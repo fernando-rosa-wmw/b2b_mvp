@@ -9,6 +9,7 @@ import 'package:b2b_mvp/shared/data/repositories/hive_product_repository.dart';
 import 'package:b2b_mvp/shared/interfaces/repositories/cart_repository.dart';
 import 'package:b2b_mvp/shared/interfaces/repositories/product_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:logger/logger.dart';
 
 class SaleModule extends Module {
   @override
@@ -25,9 +26,19 @@ class SaleModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/', child: (context) => const SalePage());
-    r.child('/cart', child: (context) => const CartPage());
-    r.child('/product_details', child: (context) => const ProductDetailsPage());
+    r.child('/', child: (_) => const SalePage());
+    r.child('/cart', child: (_) => const CartPage());
+    r.child('/product_details/:id', child: (_) => ProductDetailsPage(productId: parseId(r)));
     super.routes(r);
+  }
+
+  int parseId(RouteManager r) {
+    int id = 0;
+    try {
+      id = int.tryParse(r.args.params['id'])!;
+    } catch (e, s) {
+      print(s);
+    }
+    return id;
   }
 }

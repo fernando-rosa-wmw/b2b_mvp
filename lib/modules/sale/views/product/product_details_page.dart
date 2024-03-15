@@ -5,17 +5,22 @@ import 'package:b2b_mvp/shared/widgets/screen/base_scaffold.dart';
 import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import '../../../../shared/widgets/cart/cart_widget.dart';
 import '../../../../shared/widgets/platform_resolutions.dart';
 
 class ProductDetailsPage extends StatelessWidget {
-  const ProductDetailsPage({super.key});
+  final int productId;
+
+  const ProductDetailsPage({super.key, required this.productId});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    Logger().i(productId);
 
     return BaseScaffold(
       body: SingleChildScrollView(
