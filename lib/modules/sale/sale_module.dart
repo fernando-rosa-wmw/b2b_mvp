@@ -37,7 +37,7 @@ class SaleModule extends Module {
     try {
       id = int.tryParse(r.args.params['id'])!;
     } catch (e, s) {
-      print(s);
+      Logger().e(s);
     }
     return id;
   }

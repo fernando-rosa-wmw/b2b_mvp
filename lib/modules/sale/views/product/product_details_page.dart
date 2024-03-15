@@ -1,88 +1,119 @@
 import 'package:asp/asp.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:b2b_mvp/modules/sale/atoms/sliver_atoms.dart';
+import 'package:b2b_mvp/modules/sale/sale_controller.dart';
+import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_scaffold.dart';
 import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:logger/logger.dart';
 
 import '../../../../shared/widgets/cart/cart_widget.dart';
 import '../../../../shared/widgets/platform_resolutions.dart';
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   final int productId;
 
   const ProductDetailsPage({super.key, required this.productId});
+
+  @override
+  State<ProductDetailsPage> createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+
+  ProductModel? product;
+  SaleController saleController = Modular.get();
+
+  @override
+  void initState() {
+    super.initState();
+    getProduct();
+  }
+
+  getProduct() async {
+    product = await saleController.getProduct(widget.productId);
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    Logger().i(productId);
+    Logger().i(widget.productId);
 
     return BaseScaffold(
-      body: SingleChildScrollView(
-        child: SizedBox(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildProductDetails(width, height),
-                  if (width >= PlatformResolutions.phone_width)
-                    Expanded(
-                      flex: 1,
-                      child: buildValueField(width, height),
+      body: FutureBuilder(
+        future: getProduct(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return SingleChildScrollView(
+              child: SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        buildProductDetails(width, height),
+                        if (width >= PlatformResolutions.phone_width)
+                          Expanded(
+                            flex: 1,
+                            child: buildValueField(width, height),
+                          ),
+                      ],
                     ),
-                ],
-              ),
-              SizedBox(
-                width: width >= PlatformResolutions.phone_width ? width * .75: width,
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AutoSizeText(
-                        'Descrição',
-                        minFontSize: 25,
+                    SizedBox(
+                      width: width >= PlatformResolutions.phone_width ? width * .75: width,
+                      child: const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText(
+                              'Descrição',
+                              minFontSize: 25,
+                            ),
+                            Divider(
+                              endIndent: 10,
+                              indent: 10,
+                            ),
+                            AutoSizeText(
+                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                              minFontSize: 20,
+                            ),
+                            Divider(
+                              endIndent: 8,
+                              indent: 8,
+                            ),
+                            AutoSizeText(
+                              "Referencia: 78545",
+                              minFontSize: 20,
+                            ),
+                            AutoSizeText(
+                              "Marca: DUCOCO",
+                              minFontSize: 20,
+                            ),
+                            AutoSizeText(
+                              "Validade minima: 10 dias",
+                              minFontSize: 20,
+                            ),
+                          ],
+                        ),
                       ),
-                      Divider(
-                        endIndent: 10,
-                        indent: 10,
-                      ),
-                      AutoSizeText(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                        minFontSize: 20,
-                      ),
-                      Divider(
-                        endIndent: 8,
-                        indent: 8,
-                      ),
-                      AutoSizeText(
-                        "Referencia: 78545",
-                        minFontSize: 20,
-                      ),
-                      AutoSizeText(
-                        "Marca: DUCOCO",
-                        minFontSize: 20,
-                      ),
-                      AutoSizeText(
-                        "Validade minima: 10 dias",
-                        minFontSize: 20,
-                      ),
-                    ],
-                  ),
-                ),
-              )
+                    )
 
-            ],
-          ),
-        ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator(),);
+          }
+        }
       ),
       selectedIndex: 1,
       floatingAction: () {
@@ -104,24 +135,24 @@ class ProductDetailsPage extends StatelessWidget {
         children: [
           Container(
             // color: Colors.purple,
-            child: const Column(
+            child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AutoSizeText('Inicio > BOMBONIERE >Confeitaria >Leite de Coco'),
+                        const AutoSizeText('Inicio > BOMBONIERE >Confeitaria >Leite de Coco'),
                         AutoSizeText(
-                          'Product Name',
+                          product!.name,
                           minFontSize: 30,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Icon(
                               Icons.percent_outlined,
@@ -140,7 +171,7 @@ class ProductDetailsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                ProductImageCarousel(),
+                const ProductImageCarousel(),
               ],
             ),
           ),
@@ -160,8 +191,8 @@ class ProductDetailsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const AutoSizeText('por apenas', minFontSize: 18,),
-          const AutoSizeText('R\$ 7,06', minFontSize: 18,style: TextStyle(color: Colors.grey),),
-          const AutoSizeText('R\$ 7,06', minFontSize: 24,),
+          AutoSizeText(product!.formattedPrice, minFontSize: 18,style: const TextStyle(color: Colors.grey),),
+          AutoSizeText(product!.formattedPrice, minFontSize: 24,),
           SizedBox(
             width: (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
             child: DropdownButton(
