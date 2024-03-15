@@ -1,5 +1,6 @@
 import 'package:asp/asp.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:b2b_mvp/modules/sale/atoms/cart_atoms.dart';
 import 'package:b2b_mvp/modules/sale/atoms/sliver_atoms.dart';
 import 'package:b2b_mvp/modules/sale/sale_controller.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
@@ -23,14 +24,14 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-
   ProductModel? product;
   SaleController saleController = Modular.get();
 
   @override
   void initState() {
-    super.initState();
     getProduct();
+    fetchCard();
+    super.initState();
   }
 
   getProduct() async {
@@ -41,6 +42,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    productImageSliverState.value = 0;
 
     Logger().i(widget.productId);
 
@@ -171,7 +173,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                   ),
                 ),
-                const ProductImageCarousel(),
+                ProductImageCarousel(product: product!),
               ],
             ),
           ),
@@ -228,7 +230,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           color: Colors.white,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        addProductToCard.setValue(product);
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
@@ -261,10 +265,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 }
 
 class ProductImageCarousel extends StatelessWidget {
-  const ProductImageCarousel({
-    super.key,
-  });
+  final ProductModel product;
 
+  const ProductImageCarousel({
+    super.key, 
+    required this.product,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -287,8 +293,7 @@ class ProductImageCarousel extends StatelessWidget {
             ),
             itemBuilder: (context, index, realIndex) {
               return Card.outlined(
-                child: Image.network(
-                    'https://cdn-icons-png.flaticon.com/512/2751/2751070.png'),
+                child: Image.network(product.imageUrl),
               );
             },
             itemCount: 3,
@@ -318,7 +323,31 @@ class ProductImageCarousel extends StatelessWidget {
                                     ? 0.9
                                     : 0.4),
                       ),
-                      child: const Icon(Icons.image_not_supported_outlined),
+                      child: Opacity(
+                        opacity: productImageSliverState.value == entry.key
+                            ? 0.9
+                            : 0.4,
+                        child: Image.network(
+                          width: 100,
+                          height: 100,
+                          product.imageUrl,
+                          loadingBuilder: (context, widget, imageChunk) {
+                            if (imageChunk == null) return widget;
+                            return const CircularProgressIndicator();
+                          },
+                          errorBuilder: (context, exception, _) {
+                            return const SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: Icon(
+                                Icons.image_not_supported_outlined,
+                                color: Colors.red,
+                                size: 100,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   );
                 },

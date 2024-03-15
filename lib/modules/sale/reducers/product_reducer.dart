@@ -20,6 +20,7 @@ class ProductReducer extends Reducer {
   }
 
   Future<void> _fetchProduct() async {
+    await Future.delayed(const Duration(seconds: 2));
     productGridState.value = await productRepository.getAll();
     productGridLoadingState.value = false;
   }

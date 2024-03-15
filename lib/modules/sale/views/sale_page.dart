@@ -129,9 +129,8 @@ class _SalePageState extends State<SalePage> {
                   crossAxisCount: (width > 1000) ? 6 : null,
                 ),
                 if (productReducer.productGridLoadingState.value)
-                  const Align(
-                    alignment: Alignment.topCenter,
-                    child: CircularProgressIndicator(),
+                  const Center(
+                    child: LinearProgressIndicator(),
                   ),
               ],
             ),
