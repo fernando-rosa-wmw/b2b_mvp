@@ -16,7 +16,6 @@ class ProductDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    CarouselController carouselController = CarouselController();
 
     return BaseScaffold(
       body: SingleChildScrollView(
@@ -27,7 +26,7 @@ class ProductDetailsPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  buildProductDetails(width, height, carouselController),
+                  buildProductDetails(width, height),
                   if (width >= PlatformResolutions.phone_width)
                     Expanded(
                       flex: 1,
@@ -93,23 +92,23 @@ class ProductDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget buildProductDetails(double width, double height, CarouselController carouselController) {
+  Widget buildProductDetails(double width, double height) {
     return Expanded(
       flex: 3,
       child: Column(
         children: [
           Container(
             // color: Colors.purple,
-            child: Column(
+            child: const Column(
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AutoSizeText('Home > BOMBONIERE >Confeitaria >Leite de Coco'),
+                        AutoSizeText('Inicio > BOMBONIERE >Confeitaria >Leite de Coco'),
                         AutoSizeText(
                           'Product Name',
                           minFontSize: 30,
@@ -136,7 +135,7 @@ class ProductDetailsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                ProductImageCarousel(carouselController: carouselController),
+                ProductImageCarousel(),
               ],
             ),
           ),
@@ -160,7 +159,6 @@ class ProductDetailsPage extends StatelessWidget {
           const AutoSizeText('R\$ 7,06', minFontSize: 24,),
           SizedBox(
             width: (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
-            height: (width <= PlatformResolutions.phone_width) ? 60 : height * .05,
             child: DropdownButton(
               value: list.first,
               icon: const Icon(Icons.arrow_downward),
@@ -177,11 +175,11 @@ class ProductDetailsPage extends StatelessWidget {
           ),
           SizedBox(
             width: (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
-            height: (width <= PlatformResolutions.phone_width) ? 60 : height * .1,
+            height: (width <= PlatformResolutions.phone_width) ? 60 : height * .09,
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
                   child: SizedBox(
                     width: (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
                     height: (width <= PlatformResolutions.phone_width) ? 50 : height * .09,
@@ -215,7 +213,6 @@ class ProductDetailsPage extends StatelessWidget {
           ),
           SizedBox(
             width: (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
-            height: (width <= PlatformResolutions.phone_width) ? 60 : height * .05,
             child: NumericStepButton(
               onAddChanged: () {},
               onRemoveChanged: () {},
@@ -230,14 +227,13 @@ class ProductDetailsPage extends StatelessWidget {
 class ProductImageCarousel extends StatelessWidget {
   const ProductImageCarousel({
     super.key,
-    required this.carouselController,
   });
 
-  final CarouselController carouselController;
 
   @override
   Widget build(BuildContext context) {
     context.select(() => [productImageSliverState]);
+    final CarouselController carouselController = CarouselController();
 
     return RxBuilder(builder: (context) {
       return Column(
