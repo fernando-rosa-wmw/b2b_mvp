@@ -31,7 +31,7 @@ class SaleController {
     return await cartRepository.removeAllProducts(product, cart);
   }
 
-  Future<ProductModel> getProduct(int productId) async {
+  Future<ProductModel>  getProduct(int productId) async {
     return await productRepository.getOne(productId);
   }
 }

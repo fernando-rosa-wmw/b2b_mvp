@@ -1,14 +1,13 @@
 import 'package:asp/asp.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:b2b_mvp/modules/sale/atoms/cart_atoms.dart';
+import 'package:b2b_mvp/modules/sale/atoms/product_atoms.dart';
 import 'package:b2b_mvp/modules/sale/atoms/sliver_atoms.dart';
-import 'package:b2b_mvp/modules/sale/sale_controller.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_scaffold.dart';
 import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:logger/logger.dart';
 
 import '../../../../shared/widgets/cart/cart_widget.dart';
@@ -19,41 +18,42 @@ class ProductDetailsPage extends StatefulWidget {
 
   const ProductDetailsPage({
     super.key,
-    required this.productId,});
+    required this.productId,
+  });
 
   @override
   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  ProductModel? product;
-  SaleController saleController = Modular.get();
+  final ProductModel? product = productDetailsState.value;
 
   @override
   void initState() {
-    getProduct();
-    fetchCard();
+    productImageSliverState.value = 0;
+    fetchProductDetails.setValue(widget.productId);
     super.initState();
-  }
-
-  getProduct() async {
-    product = await saleController.getProduct(widget.productId);
   }
 
   @override
   Widget build(BuildContext context) {
+    context.select(() => [
+          productDetailsState,
+          productDetailsLoadingState,
+          cartState,
+        ]);
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    productImageSliverState.value = 0;
 
     Logger().i(widget.productId);
 
     return BaseScaffold(
-      body: FutureBuilder(
-        future: getProduct(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return SingleChildScrollView(
+      body: (productDetailsLoadingState.value)
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
               child: SizedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +70,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ],
                     ),
                     SizedBox(
-                      width: width >= PlatformResolutions.phone_width ? width * .75: width,
+                      width: width >= PlatformResolutions.phone_width
+                          ? width * .75
+                          : width,
                       child: const Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Column(
@@ -109,16 +111,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                       ),
                     )
-
                   ],
                 ),
               ),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator(),);
-          }
-        }
-      ),
+            ),
       selectedIndex: 1,
       floatingAction: () {
         showModalBottomSheet<void>(
@@ -148,7 +144,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const AutoSizeText('Inicio > BOMBONIERE >Confeitaria >Leite de Coco'),
+                        const AutoSizeText(
+                            'Inicio > BOMBONIERE >Confeitaria >Leite de Coco'),
                         AutoSizeText(
                           product!.name,
                           minFontSize: 30,
@@ -194,11 +191,22 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const AutoSizeText('por apenas', minFontSize: 18,),
-          AutoSizeText(product!.formattedPrice, minFontSize: 18,style: const TextStyle(color: Colors.grey),),
-          AutoSizeText(product!.formattedPrice, minFontSize: 24,),
+          const AutoSizeText(
+            'por apenas',
+            minFontSize: 18,
+          ),
+          AutoSizeText(
+            product!.formattedPrice,
+            minFontSize: 18,
+            style: const TextStyle(color: Colors.grey),
+          ),
+          AutoSizeText(
+            product!.formattedPrice,
+            minFontSize: 24,
+          ),
           SizedBox(
-            width: (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
+            width:
+                (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
             child: DropdownButton(
               value: list.first,
               icon: const Icon(Icons.arrow_downward),
@@ -214,15 +222,21 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
           ),
           SizedBox(
-            width: (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
-            height: (width <= PlatformResolutions.phone_width) ? 60 : height * .09,
+            width:
+                (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
+            height:
+                (width <= PlatformResolutions.phone_width) ? 60 : height * .09,
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),
                   child: SizedBox(
-                    width: (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
-                    height: (width <= PlatformResolutions.phone_width) ? 50 : height * .09,
+                    width: (width >= PlatformResolutions.phone_width)
+                        ? 250
+                        : width * .5,
+                    height: (width <= PlatformResolutions.phone_width)
+                        ? 50
+                        : height * .09,
                     child: ElevatedButton.icon(
                       label: const AutoSizeText(
                         'Adicionar',
@@ -254,10 +268,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
           ),
           SizedBox(
-            width: (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
+            width:
+                (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
             child: NumericStepButton(
-              onAddChanged: () {},
-              onRemoveChanged: () {},
+              onAddChanged: () {
+                addProductToCard.setValue(product);
+              },
+              onRemoveChanged: () {
+                removeProductFromCard.setValue(product);
+              },
+              counter: product!.quantity,
             ),
           )
         ],
@@ -270,7 +290,7 @@ class ProductImageCarousel extends StatelessWidget {
   final ProductModel product;
 
   const ProductImageCarousel({
-    super.key, 
+    super.key,
     required this.product,
   });
 
@@ -279,85 +299,83 @@ class ProductImageCarousel extends StatelessWidget {
     context.select(() => [productImageSliverState]);
     final CarouselController carouselController = CarouselController();
 
-    return RxBuilder(builder: (context) {
-      return Column(
-        children: [
-          CarouselSlider.builder(
-            carouselController: carouselController,
-            options: CarouselOptions(
-              height: 350.0,
-              aspectRatio: 2.0,
-              enlargeCenterPage: false,
-              viewportFraction: 1,
-              onPageChanged: (i, reason) {
-                productImageSliverState.setValue(i);
-              },
-            ),
-            itemBuilder: (context, index, realIndex) {
-              return Card.outlined(
-                child: Image.network(product.imageUrl),
-              );
+    return Column(
+      children: [
+        CarouselSlider.builder(
+          carouselController: carouselController,
+          options: CarouselOptions(
+            height: 350.0,
+            aspectRatio: 2.0,
+            enlargeCenterPage: false,
+            viewportFraction: 1,
+            onPageChanged: (i, reason) {
+              productImageSliverState.setValue(i);
             },
-            itemCount: 3,
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [1, 2, 3].asMap().entries.map(
-                (entry) {
-                  return GestureDetector(
-                    onTap: () => carouselController.animateToPage(entry.key),
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                        horizontal: 4.0,
-                      ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: (Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white
-                                : Colors.blue)
-                            .withOpacity(
-                                productImageSliverState.value == entry.key
-                                    ? 0.9
-                                    : 0.4),
-                      ),
-                      child: Opacity(
-                        opacity: productImageSliverState.value == entry.key
-                            ? 0.9
-                            : 0.4,
-                        child: Image.network(
-                          width: 100,
-                          height: 100,
-                          product.imageUrl,
-                          loadingBuilder: (context, widget, imageChunk) {
-                            if (imageChunk == null) return widget;
-                            return const CircularProgressIndicator();
-                          },
-                          errorBuilder: (context, exception, _) {
-                            return const SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: Icon(
-                                Icons.image_not_supported_outlined,
-                                color: Colors.red,
-                                size: 100,
-                              ),
-                            );
-                          },
-                        ),
+          itemBuilder: (context, index, realIndex) {
+            return Card.outlined(
+              child: Image.network(product.imageUrl),
+            );
+          },
+          itemCount: 3,
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [1, 2, 3].asMap().entries.map(
+              (entry) {
+                return GestureDetector(
+                  onTap: () => carouselController.animateToPage(entry.key),
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 8.0,
+                      horizontal: 4.0,
+                    ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: (Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.blue)
+                          .withOpacity(
+                              productImageSliverState.value == entry.key
+                                  ? 0.9
+                                  : 0.4),
+                    ),
+                    child: Opacity(
+                      opacity: productImageSliverState.value == entry.key
+                          ? 0.9
+                          : 0.4,
+                      child: Image.network(
+                        width: 100,
+                        height: 100,
+                        product.imageUrl,
+                        loadingBuilder: (context, widget, imageChunk) {
+                          if (imageChunk == null) return widget;
+                          return const CircularProgressIndicator();
+                        },
+                        errorBuilder: (context, exception, _) {
+                          return const SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: Icon(
+                              Icons.image_not_supported_outlined,
+                              color: Colors.red,
+                              size: 100,
+                            ),
+                          );
+                        },
                       ),
                     ),
-                  );
-                },
-              ).toList(),
-            ),
+                  ),
+                );
+              },
+            ).toList(),
           ),
-        ],
-      );
-    });
+        ),
+      ],
+    );
   }
 }

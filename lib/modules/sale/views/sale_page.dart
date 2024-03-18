@@ -1,7 +1,7 @@
 import 'package:asp/asp.dart';
 import 'package:b2b_mvp/modules/sale/atoms/cart_atoms.dart';
+import 'package:b2b_mvp/modules/sale/atoms/product_atoms.dart';
 import 'package:b2b_mvp/modules/sale/reducers/cart_reducer.dart';
-import 'package:b2b_mvp/modules/sale/reducers/product_reducer.dart';
 import 'package:b2b_mvp/modules/sale/sale_controller.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:b2b_mvp/shared/widgets/cart/cart_widget.dart';
@@ -10,7 +10,6 @@ import 'package:b2b_mvp/shared/widgets/products/product_carousel.dart';
 import 'package:b2b_mvp/shared/widgets/responsives/responsive_gridview.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_scaffold.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -25,14 +24,13 @@ class _SalePageState extends State<SalePage> {
   final _selectedIndex = 0;
   final CarouselController productFocusCarouselController = CarouselController();
   final SaleController saleController = Modular.get();
-  final ProductReducer productReducer = Modular.get();
   final CartReducer cartReducer = Modular.get();
 
   @override
   void initState() {
     // TODO - Remover
     saleController.mockList();
-    productReducer.fetchProduct();
+    fetchProduct();
     fetchCard();
     super.initState();
   }
@@ -40,11 +38,11 @@ class _SalePageState extends State<SalePage> {
   @override
   Widget build(BuildContext context) {
     context.select(() => [
-          productReducer.productGridState,
-          productReducer.productGridLoadingState,
+          productGridState,
+          productGridLoadingState,
           cartState,
         ]);
-    final List<ProductModel> productList = productReducer.productGridState.value;
+    final List<ProductModel> productList = productGridState.value;
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
 
@@ -141,7 +139,7 @@ class _SalePageState extends State<SalePage> {
                   productList: productList,
                   crossAxisCount: (width > 1000) ? 6 : null,
                 ),
-                if (productReducer.productGridLoadingState.value)
+                if (productGridLoadingState.value)
                   const Center(
                     child: LinearProgressIndicator(),
                   ),
