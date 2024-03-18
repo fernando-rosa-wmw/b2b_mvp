@@ -31,7 +31,7 @@ class BaseScaffold extends StatelessWidget {
         selectedIndex: selectedIndex,
       ),
       body: body,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: Container(
         margin: const EdgeInsets.only(top: 50),
         height: 64,

@@ -10,6 +10,7 @@ import 'package:b2b_mvp/shared/widgets/products/product_carousel.dart';
 import 'package:b2b_mvp/shared/widgets/responsives/responsive_gridview.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_scaffold.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -123,6 +124,19 @@ class _SalePageState extends State<SalePage> {
                 ResponsiveGridView(
                   onTab: (index) {
                     addProductToCard.setValue(productList[index]);
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text("Produto Adicionado!"),
+                        behavior: SnackBarBehavior.floating,
+                        action: SnackBarAction(
+                          label: "Desfazer",
+                          onPressed: () {
+                            removeProductFromCard.setValue(productList[index]);
+                          },
+                        ),
+                      ),
+                    );
                   },
                   productList: productList,
                   crossAxisCount: (width > 1000) ? 6 : null,

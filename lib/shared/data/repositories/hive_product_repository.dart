@@ -90,6 +90,7 @@ class HiveProductRepository implements ProductRepository {
   @override
   Future<ProductModel> getOne(int id) async {
     var box = await Hive.openBox<ProductModel>(boxName);
+    await Future.delayed(const Duration(seconds: 1));
     try {
       ProductModel products = box.get(id)!;
       return products;
