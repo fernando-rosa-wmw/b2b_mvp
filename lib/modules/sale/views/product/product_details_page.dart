@@ -17,7 +17,9 @@ import '../../../../shared/widgets/platform_resolutions.dart';
 class ProductDetailsPage extends StatefulWidget {
   final int productId;
 
-  const ProductDetailsPage({super.key, required this.productId});
+  const ProductDetailsPage({
+    super.key,
+    required this.productId,});
 
   @override
   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
