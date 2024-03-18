@@ -65,7 +65,6 @@ class _SalePageState extends State<SalePage> {
                   .toList(),
               options: CarouselOptions(
                   height: height * 0.15,
-                  enableInfiniteScroll: false,
                   pageSnapping: true,
                   viewportFraction: 1.0,
                   enlargeCenterPage: false,
