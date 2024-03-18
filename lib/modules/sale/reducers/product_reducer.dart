@@ -27,7 +27,7 @@ class ProductReducer extends Reducer {
 
   Future<void> _getProduct() async {
     await Future.delayed(const Duration(seconds: 2));
-    int productId = fetchProductDetails.value;
+    int productId = fetchProductDetails.value ?? 0;
     productDetailsState.value = await saleController.getProduct(productId);
     productDetailsLoadingState.value = false;
   }

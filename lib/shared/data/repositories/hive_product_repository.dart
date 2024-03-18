@@ -92,8 +92,8 @@ class HiveProductRepository implements ProductRepository {
     var box = await Hive.openBox<ProductModel>(boxName);
     await Future.delayed(const Duration(seconds: 1));
     try {
-      ProductModel products = box.get(id)!;
-      return products;
+      ProductModel product = box.get(id)!;
+      return product;
     } catch (e, s) {
       Logger().e(e, stackTrace: s);
       throw Exception(e);

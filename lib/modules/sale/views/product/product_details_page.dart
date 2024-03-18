@@ -26,11 +26,10 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  final ProductModel? product = productDetailsState.value;
-
   @override
   void initState() {
     productImageSliverState.value = 0;
+    productDetailsLoadingState.value = true;
     fetchProductDetails.setValue(widget.productId);
     super.initState();
   }
@@ -38,18 +37,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   Widget build(BuildContext context) {
     context.select(() => [
-          productDetailsState,
           productDetailsLoadingState,
           cartState,
         ]);
 
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+    final ProductModel? product = productDetailsState.value;
 
     Logger().i(widget.productId);
 
     return BaseScaffold(
-      body: (productDetailsLoadingState.value)
+      body: (productDetailsLoadingState.value || productDetailsState.value == null)
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -61,11 +60,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        buildProductDetails(width, height),
+                        buildProductDetails(width, height, product!),
                         if (width >= PlatformResolutions.phone_width)
                           Expanded(
                             flex: 1,
-                            child: buildValueField(width, height),
+                            child: buildValueField(width, height, product),
                           ),
                       ],
                     ),
@@ -128,7 +127,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  Widget buildProductDetails(double width, double height) {
+  Widget buildProductDetails(double width, double height, ProductModel product) {
     return Expanded(
       flex: 3,
       child: Column(
@@ -147,7 +146,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         const AutoSizeText(
                             'Inicio > BOMBONIERE >Confeitaria >Leite de Coco'),
                         AutoSizeText(
-                          product!.name,
+                          product.name,
                           minFontSize: 30,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
@@ -172,18 +171,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                   ),
                 ),
-                ProductImageCarousel(product: product!),
+                ProductImageCarousel(product: product),
               ],
             ),
           ),
           if (width < PlatformResolutions.phone_width)
-            buildValueField(width, height),
+            buildValueField(width, height, product),
         ],
       ),
     );
   }
 
-  Widget buildValueField(double width, double height) {
+  Widget buildValueField(double width, double height, ProductModel product) {
     const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
     return Container(
@@ -196,12 +195,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             minFontSize: 18,
           ),
           AutoSizeText(
-            product!.formattedPrice,
+            product.formattedPrice,
             minFontSize: 18,
             style: const TextStyle(color: Colors.grey),
           ),
           AutoSizeText(
-            product!.formattedPrice,
+            product.formattedPrice,
             minFontSize: 24,
           ),
           SizedBox(

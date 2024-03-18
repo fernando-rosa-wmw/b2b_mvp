@@ -10,4 +10,4 @@ final productGridLoadingState = Atom(true);
 
 //Actions
 final fetchProduct = Atom.action();
-final fetchProductDetails = Atom<int>(0);
+final fetchProductDetails = Atom<int?>(null);
