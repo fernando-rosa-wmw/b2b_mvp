@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class OrderStatusIndicator extends StatelessWidget {
+  final int selectedIndex;
+
   const OrderStatusIndicator({
     super.key,
+    this.selectedIndex = 0,
   });
 
   @override
@@ -16,8 +19,8 @@ class OrderStatusIndicator extends StatelessWidget {
           Column(
             children: [
               Ink(
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.blue),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: selectedIndex == 0 ? Colors.blue : Colors.grey),
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
@@ -40,8 +43,8 @@ class OrderStatusIndicator extends StatelessWidget {
           Column(
             children: [
               Ink(
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.grey),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: selectedIndex == 1 ? Colors.blue : Colors.grey),
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
@@ -64,8 +67,8 @@ class OrderStatusIndicator extends StatelessWidget {
           Column(
             children: [
               Ink(
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.grey),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: selectedIndex == 2 ? Colors.blue : Colors.grey),
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
