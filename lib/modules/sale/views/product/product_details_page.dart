@@ -143,8 +143,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const AutoSizeText(
-                            'Inicio > BOMBONIERE >Confeitaria >Leite de Coco'),
+                        AutoSizeText(
+                            'Inicio > Categoria > ${product.name}'),
                         AutoSizeText(
                           product.name,
                           minFontSize: 30,
