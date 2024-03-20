@@ -34,7 +34,7 @@ class CartWidget extends StatelessWidget {
     );
   }
 
-  Column buildCardDetails(double height, double width) {
+  Widget buildCardDetails(double height, double width) {
     return Column(
       children: [
         buildHeader('MeuCarrinho'),
@@ -44,17 +44,20 @@ class CartWidget extends StatelessWidget {
             buildCard(
               height,
               'Produtos selecionados (${(cartState.value == null) ? 0 : _countProducts()})',
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: (cartState.value != null)
-                    ? cartState.value!.productList!.length
-                    : 0,
-                itemBuilder: (context, index) {
-                  ProductModel product = cartState.value!.productList![index];
-                  return ProductCard(
-                    product: product,
-                  );
-                },
+              SizedBox(
+                height: height * .3,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: (cartState.value != null)
+                      ? cartState.value!.productList!.length
+                      : 0,
+                  itemBuilder: (context, index) {
+                    ProductModel product = cartState.value!.productList![index];
+                    return ProductCard(
+                      product: product,
+                    );
+                  },
+                ),
               ),
             ),
             Padding(
@@ -106,9 +109,6 @@ class CartWidget extends StatelessWidget {
                 onPressed: () {},
                 child: const Text(
                   'VALIDATOR CUPOM',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
                 ),
               ),
             ),
@@ -365,7 +365,180 @@ class CartWidget extends StatelessWidget {
     return Column(
       children: [
         buildHeader('Pagamento'),
-        const Divider(),
+        const Card.filled(
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Olá MUNDO DA MASCADA,seu pedido será entrege em AV. SANTA CATARINA, 556-ESTADOS, BAHIA via À retirar e entregue até 21/03/2024 - Quinta-feira."),
+          ),
+        ),
+        buildCard(
+          height,
+          'Itens do Pedido',
+          Card(
+            clipBehavior: Clip.hardEdge,
+            child: ExpansionTile(
+              title: const Text('Carrinho', style: TextStyle(color: Colors.blue),),
+              children: (cartState.value != null &&
+                cartState.value!.productList != null &&
+                cartState.value!.productList!.isNotEmpty) ?
+                cartState.value!.productList!.map((e) => ProductCard(product: e)).toList()
+              : [const Text('Nenhum item no carrinho')],
+            ),
+          ),
+        ),
+        buildCard(
+          height,
+          'Prazo de pagamento',
+          Column(
+            children: [
+              const SizedBox(
+                height: 80,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Card(
+                        color: Colors.blue,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.monetization_on, color: Colors.white),
+                            Text('DINHEIRO', style: TextStyle(color: Colors.white),)
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Card(
+                        color: Colors.blue,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.newspaper, color: Colors.white),
+                            Text('BOLETO', style: TextStyle(color: Colors.white),)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 25,
+                        width: 25,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text('UN - VENDA DINHEIRO DEPOSITO'),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        buildCard(
+          height,
+          'Cashback',
+          Column(
+            children: [
+              const Text('Valor do cashback'),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(9),
+                      ),
+                    ),
+                    backgroundColor: Colors.blue,
+                  ),
+                  child: const Text(
+                    'Utilizar Cashback',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              SizedBox(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 60,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(9),
+                                ),
+                              ),
+                              backgroundColor: Colors.blue,
+                            ),
+                            onPressed: () {
+                              cartStatusState.setValue(1);
+                            },
+                            child: const Text(
+                              'ENTREGA',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 60,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(9),
+                                ),
+                              ),
+                              backgroundColor: Colors.green,
+                            ),
+                            onPressed: () {
+                              cartStatusState.setValue(0);
+                            },
+                            child: const Text(
+                              'FINALIZAR',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+
+            ],
+          ),
+        )
       ],
     );
   }
