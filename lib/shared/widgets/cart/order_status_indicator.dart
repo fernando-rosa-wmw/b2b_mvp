@@ -20,7 +20,7 @@ class OrderStatusIndicator extends StatelessWidget {
             children: [
               Ink(
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: selectedIndex == 0 ? Colors.blue : Colors.grey),
+                    shape: BoxShape.circle, color: selectedIndex == 0 ? Theme.of(context).colorScheme.primary : Colors.grey),
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
@@ -44,7 +44,7 @@ class OrderStatusIndicator extends StatelessWidget {
             children: [
               Ink(
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: selectedIndex == 1 ? Colors.blue : Colors.grey),
+                    shape: BoxShape.circle, color: selectedIndex == 1 ? Theme.of(context).colorScheme.primary : Colors.grey),
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
@@ -68,7 +68,7 @@ class OrderStatusIndicator extends StatelessWidget {
             children: [
               Ink(
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: selectedIndex == 2 ? Colors.blue : Colors.grey),
+                    shape: BoxShape.circle, color: selectedIndex == 2 ? Theme.of(context).colorScheme.primary : Colors.grey),
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(

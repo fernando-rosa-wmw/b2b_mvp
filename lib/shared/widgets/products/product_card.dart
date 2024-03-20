@@ -43,8 +43,8 @@ class ProductCard extends StatelessWidget {
                       ),
                       Text(
                         product.formattedPrice,
-                        style: const TextStyle(
-                            color: Colors.blue,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                             fontSize: 18),
                       ),
@@ -80,8 +80,8 @@ class ProductCard extends StatelessWidget {
                       children: [
                         const Text('Subtotal'),
                         Text(formatCurrency(product.price * product.quantity),
-                          style: const TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),

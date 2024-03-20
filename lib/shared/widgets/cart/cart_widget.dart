@@ -126,6 +126,7 @@ class CartWidget extends StatelessWidget {
                       Radius.circular(9),
                     ),
                   ),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () {
                   cartStatusState.value++;
@@ -280,18 +281,18 @@ class CartWidget extends StatelessWidget {
             ),
             context,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
             child: Align(
               alignment: Alignment.centerRight,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('Frete: R\$ 0,00'),
+                  const Text('Frete: R\$ 0,00'),
                   Text(
                     'Total: R\$ 0,00',
                     style: TextStyle(
-                        color: Colors.blue,
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
@@ -314,7 +315,7 @@ class CartWidget extends StatelessWidget {
                               Radius.circular(9),
                             ),
                           ),
-                          backgroundColor: Colors.blue,
+                          backgroundColor: Theme.of(context).colorScheme.primary,
                         ),
                         onPressed: () {
                           cartStatusState.setValue(0);
@@ -341,7 +342,7 @@ class CartWidget extends StatelessWidget {
                               Radius.circular(9),
                             ),
                           ),
-                          backgroundColor: Colors.blue,
+                          backgroundColor: Theme.of(context).colorScheme.primary,
                         ),
                         onPressed: () {
                           cartStatusState.setValue(2);
@@ -380,7 +381,7 @@ class CartWidget extends StatelessWidget {
           Card(
             clipBehavior: Clip.hardEdge,
             child: ExpansionTile(
-              title: const Text('Carrinho', style: TextStyle(color: Colors.blue),),
+              title: Text('Carrinho', style: TextStyle(color: Theme.of(context).colorScheme.primary),),
               children: (cartState.value != null &&
                 cartState.value!.productList != null &&
                 cartState.value!.productList!.isNotEmpty) ?
@@ -395,14 +396,14 @@ class CartWidget extends StatelessWidget {
           'Prazo de pagamento',
           Column(
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 80,
                 child: Row(
                   children: [
                     Expanded(
                       child: Card(
-                        color: Colors.blue,
-                        child: Column(
+                        color: Theme.of(context).colorScheme.primary,
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.monetization_on, color: Colors.white),
@@ -413,8 +414,8 @@ class CartWidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: Card(
-                        color: Colors.blue,
-                        child: Column(
+                        color: Theme.of(context).colorScheme.primary,
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.newspaper, color: Colors.white),
@@ -434,9 +435,9 @@ class CartWidget extends StatelessWidget {
                       Container(
                         height: 25,
                         width: 25,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.blue,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       const SizedBox(
@@ -472,7 +473,7 @@ class CartWidget extends StatelessWidget {
                         Radius.circular(9),
                       ),
                     ),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   child: const Text(
                     'Utilizar Cashback',
@@ -495,7 +496,7 @@ class CartWidget extends StatelessWidget {
                                   Radius.circular(9),
                                 ),
                               ),
-                              backgroundColor: Colors.blue,
+                              backgroundColor: Theme.of(context).colorScheme.primary,
                             ),
                             onPressed: () {
                               cartStatusState.setValue(1);
