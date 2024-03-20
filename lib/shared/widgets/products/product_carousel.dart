@@ -69,7 +69,7 @@ class ProductCarousel extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: (Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white
-                                : Colors.blue)
+                                : Theme.of(context).colorScheme.primary)
                             .withOpacity(
                                 sliverState.value == entry.key ? 0.9 : 0.4)),
                   ),

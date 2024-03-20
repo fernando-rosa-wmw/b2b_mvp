@@ -152,16 +152,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const Row(
+                        Row(
                           children: [
                             Icon(
                               Icons.percent_outlined,
-                              color: Colors.blue,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                             Text(
                               'Promoção',
                               style: TextStyle(
-                                color: Colors.blue,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold,
                               ),
                             )
@@ -210,7 +210,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               value: list.first,
               icon: const Icon(Icons.arrow_downward),
               elevation: 16,
-              style: const TextStyle(color: Colors.blue, fontSize: 22),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 22),
               onChanged: (String? value) {},
               items: list.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -249,12 +249,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         addProductToCard.setValue(product);
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(9),
                           ),
                         ),
-                        backgroundColor: Colors.blue,
                       ),
                       icon: const Icon(
                         Icons.add_shopping_cart_outlined,
@@ -337,7 +337,7 @@ class ProductImageCarousel extends StatelessWidget {
                       shape: BoxShape.rectangle,
                       color: (Theme.of(context).brightness == Brightness.dark
                               ? Colors.white
-                              : Colors.blue)
+                              : Theme.of(context).colorScheme.primary)
                           .withOpacity(
                               productImageSliverState.value == entry.key
                                   ? 0.9

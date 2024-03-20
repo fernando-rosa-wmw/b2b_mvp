@@ -26,7 +26,7 @@ class BaseScaffold extends StatelessWidget {
     return Scaffold(
       appBar: (width >= PlatformResolutions.phone_width)
           ? buildWebHeader(context)
-          : buildAppBar(),
+          : buildAppBar(context),
       drawer: BaseDrawer(
         selectedIndex: selectedIndex,
       ),
@@ -61,8 +61,8 @@ class BaseScaffold extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.blue),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Theme.of(context).colorScheme.primary),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text('${cartState.value!.productList!.length}'),
@@ -85,7 +85,7 @@ class BaseScaffold extends StatelessWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(150),
       child: Container(
-        color: Colors.redAccent,
+        color: Theme.of(context).colorScheme.primary,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -177,7 +177,7 @@ class BaseScaffold extends StatelessWidget {
             Expanded(
               child: Container(
                 alignment: Alignment.center,
-                color: Colors.red,
+                color: Theme.of(context).colorScheme.secondary,
                 width: MediaQuery.of(context).size.width,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -204,7 +204,7 @@ class BaseScaffold extends StatelessWidget {
               width: 150,
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Theme.of(context).colorScheme.secondary,
                 borderRadius: BorderRadius.circular(2),
                 border: Border.all(color: Colors.black12, width: 1.1),
               ),
@@ -235,7 +235,7 @@ class BaseScaffold extends StatelessWidget {
         .toList();
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       iconTheme: const IconThemeData(color: Colors.white),
       title: Center(
@@ -245,7 +245,7 @@ class BaseScaffold extends StatelessWidget {
               'https://cdn.shortpixel.ai/spai/w_156+q_lossy+ret_img+to_webp/www.wmw.com.br/wp-content/uploads/2019/05/logotipo-2019-branco.png'),
         ),
       ),
-      backgroundColor: Colors.red,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       actions: [
         IconButton(
           onPressed: () {},

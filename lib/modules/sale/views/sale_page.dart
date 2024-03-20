@@ -56,7 +56,7 @@ class _SalePageState extends State<SalePage> {
                     (i) => SizedBox(
                       width: width,
                       child: Image.network(
-                        color: Colors.blue,
+                        color: Theme.of(context).colorScheme.primary,
                         'https://cdn.shortpixel.ai/spai/w_156+q_lossy+ret_img+to_webp/www.wmw.com.br/wp-content/uploads/2019/05/logotipo-2019-branco.png',
                       ),
                     ),
@@ -72,15 +72,15 @@ class _SalePageState extends State<SalePage> {
             ),
             Column(
               children: [
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(left: 24.0),
+                    padding: const EdgeInsets.only(left: 24.0),
                     child: Text(
                       'Produtos em Destaque',
                       style: TextStyle(
                         fontSize: 28,
-                        color: Colors.blue,
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -95,23 +95,23 @@ class _SalePageState extends State<SalePage> {
                 )
               ],
             ),
-            const Column(
+            Column(
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(left: 24.0),
+                    padding: const EdgeInsets.only(left: 24.0),
                     child: Text(
                       'Produtos mais comprados',
                       style: TextStyle(
                         fontSize: 28,
-                        color: Colors.blue,
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                Divider(
+                const Divider(
                   indent: 16,
                   endIndent: 16,
                 ),

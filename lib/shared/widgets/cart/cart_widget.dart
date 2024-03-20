@@ -23,9 +23,9 @@ class CartWidget extends StatelessWidget {
           children: [
             OrderStatusIndicator(selectedIndex: cartStatusState.value),
             switch (cartStatusState.value) {
-              0 => buildCardDetails(height, width),
-              1 => buildDeliveryDetails(height, width),
-              2 => buildPaymentDetails(height, width),
+              0 => buildCardDetails(height, width, context),
+              1 => buildDeliveryDetails(height, width, context),
+              2 => buildPaymentDetails(height, width, context),
               int() => const Icon(Icons.error_outline_outlined),
             }
           ],
@@ -34,7 +34,7 @@ class CartWidget extends StatelessWidget {
     );
   }
 
-  Widget buildCardDetails(double height, double width) {
+  Widget buildCardDetails(double height, double width, BuildContext context) {
     return Column(
       children: [
         buildHeader('MeuCarrinho'),
@@ -59,6 +59,7 @@ class CartWidget extends StatelessWidget {
                   },
                 ),
               ),
+              context,
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -73,9 +74,9 @@ class CartWidget extends StatelessWidget {
                     formatCurrency((cartState.value == null)
                         ? 0
                         : _getTotalValue(cartState)),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
-                      color: Colors.blue,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -125,7 +126,6 @@ class CartWidget extends StatelessWidget {
                       Radius.circular(9),
                     ),
                   ),
-                  backgroundColor: Colors.blue,
                 ),
                 onPressed: () {
                   cartStatusState.value++;
@@ -144,7 +144,7 @@ class CartWidget extends StatelessWidget {
     );
   }
 
-  Column buildCard(double height, String title, Widget content) {
+  Column buildCard(double height, String title, Widget content, BuildContext context) {
     return Column(
       children: [
         Padding(
@@ -153,8 +153,8 @@ class CartWidget extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               textAlign: TextAlign.start,
-              style: const TextStyle(
-                color: Colors.blue,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
                 fontSize: 17,
               ),
@@ -199,7 +199,7 @@ class CartWidget extends StatelessWidget {
     );
   }
 
-  Widget buildDeliveryDetails(double height, double width) {
+  Widget buildDeliveryDetails(double height, double width, BuildContext context) {
     return SizedBox(
       child: Column(
         children: [
@@ -226,6 +226,7 @@ class CartWidget extends StatelessWidget {
                 );
               },
             ),
+            context,
           ),
           buildCard(
             width,
@@ -258,6 +259,7 @@ class CartWidget extends StatelessWidget {
                 );
               },
             ),
+            context,
           ),
           const Padding(
             padding: EdgeInsets.all(24.0),
@@ -276,6 +278,7 @@ class CartWidget extends StatelessWidget {
               keyboardType: TextInputType.multiline,
               maxLines: null,
             ),
+            context,
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
@@ -361,7 +364,7 @@ class CartWidget extends StatelessWidget {
     );
   }
 
-  buildPaymentDetails(double height, double width) {
+  buildPaymentDetails(double height, double width, BuildContext context) {
     return Column(
       children: [
         buildHeader('Pagamento'),
@@ -385,6 +388,7 @@ class CartWidget extends StatelessWidget {
               : [const Text('Nenhum item no carrinho')],
             ),
           ),
+          context,
         ),
         buildCard(
           height,
@@ -445,6 +449,7 @@ class CartWidget extends StatelessWidget {
               )
             ],
           ),
+          context,
         ),
         buildCard(
           height,
@@ -538,6 +543,7 @@ class CartWidget extends StatelessWidget {
 
             ],
           ),
+          context,
         )
       ],
     );

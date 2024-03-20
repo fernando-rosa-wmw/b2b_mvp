@@ -32,9 +32,9 @@ class _NumericStepButtonState extends State<NumericStepButton> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.remove,
-              color: Colors.blue,
+              color: Theme.of(context).colorScheme.primary,
             ),
             color: Theme.of(context).primaryColor,
             onPressed: () {
@@ -50,9 +50,9 @@ class _NumericStepButtonState extends State<NumericStepButton> {
             ),
           ),
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.add,
-              color: Colors.blue,
+              color: Theme.of(context).colorScheme.primary,
             ),
             color: Theme.of(context).primaryColor,
             onPressed: () {

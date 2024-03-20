@@ -81,7 +81,7 @@ class ProductItem extends StatelessWidget {
                         ),
                         if (product.id.isEven)
                           Container(
-                            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+                            decoration: BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).colorScheme.primary),
                             child: const Padding(
                               padding: EdgeInsets.all(4.0),
                               child: Icon(
@@ -120,17 +120,17 @@ class ProductItem extends StatelessWidget {
                       AutoSizeText(
                         product.formattedPrice,
                         minFontSize: 12,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          color: Colors.blue,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       AutoSizeText(
                         product.formattedPrice,
                         minFontSize: 16,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          color: Colors.blue,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       SizedBox(
@@ -145,7 +145,7 @@ class ProductItem extends StatelessWidget {
                                 Radius.circular(9),
                               ),
                             ),
-                            backgroundColor: Colors.blue,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                           ),
                           icon: const Icon(
                             Icons.add_shopping_cart_outlined,
