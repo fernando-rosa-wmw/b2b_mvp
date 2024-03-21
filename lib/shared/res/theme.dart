@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class ThemeClass {
-  Color lightPrimaryColor = HexColor('#DF0054');
+  Color lightPrimaryColor = HexColor('#21C266'); // #E4ICIC
   Color darkPrimaryColor = HexColor('#480032');
   Color secondaryColor = HexColor('#FF8B6A');
   Color accentColor = HexColor('#FFD2BB');

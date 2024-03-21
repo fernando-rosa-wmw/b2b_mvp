@@ -1,6 +1,7 @@
 import 'package:b2b_mvp/shared/data/hive_types.dart';
 import 'package:b2b_mvp/shared/format.dart';
 import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
 
 part 'product_model.g.dart';
 @HiveType(typeId: HiveTypes.productTypeId)
@@ -29,6 +30,17 @@ class ProductModel extends HiveObject {
 
   String get formattedPrice {
     return formatCurrency(price);
+  }
+
+  factory ProductModel.fromJson(Map<String, dynamic> json, int id) {
+    return ProductModel(
+      id: id,
+      name: json['DSPRODUTO'],
+      description: json['INFO'],
+      price: json['VLPRECO'].toInt(),
+      imageUrl: json['IMPRODUTO'].toString(),
+      quantity: json['QTESTOQUE'],
+    );
   }
 
   @override

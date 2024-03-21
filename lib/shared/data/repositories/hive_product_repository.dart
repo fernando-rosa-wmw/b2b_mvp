@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:b2b_mvp/shared/interfaces/repositories/product_repository.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
+import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 
@@ -13,7 +14,7 @@ class HiveProductRepository implements ProductRepository {
     var box = await Hive.openBox<ProductModel>(boxName);
     if (box.values.toList().isEmpty) {
       List<ProductModel> list = List<ProductModel>.generate(
-        15,
+        600,
         (index) => ProductModel(
           id: index,
           name: 'Trident Muito bom duas linhas $index',
@@ -41,9 +42,22 @@ class HiveProductRepository implements ProductRepository {
 
   @override
   Future<List<ProductModel>> getAll() async {
-    var box = await Hive.openBox<ProductModel>(boxName);
+    // var box = await Hive.openBox<ProductModel>(boxName);
+    final dio = Dio();
+    final response = await dio.get('http://206.0.94.207:8100/products/queryProducts');
+
+    List jsonList = response.data;
+
+    int i = 0;
+
+    List<ProductModel> products = (jsonList.sublist(0, 15))
+        .map((productJson) => ProductModel.fromJson(productJson, i++))
+        .toList();
+
+    Logger().e(products);
+
     try {
-      List<ProductModel> products = box.values.toList();
+      // List<ProductModel> products = box.values.toList();
       return products;
     } catch (e, s) {
       Logger().e(e, stackTrace: s);
@@ -90,7 +104,7 @@ class HiveProductRepository implements ProductRepository {
   @override
   Future<ProductModel> getOne(int id) async {
     var box = await Hive.openBox<ProductModel>(boxName);
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
     try {
       ProductModel product = box.get(id)!;
       return product;

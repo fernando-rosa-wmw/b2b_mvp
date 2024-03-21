@@ -12,7 +12,7 @@ class ProductReducer extends Reducer {
 
   ProductReducer() {
     on(() => [fetchProduct], () async {
-      await _fetchProduct();
+      _fetchProduct();
     });
     on(() => [fetchProductDetails], () async{
       await _getProduct();
@@ -20,13 +20,13 @@ class ProductReducer extends Reducer {
   }
 
   Future<void> _fetchProduct() async {
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     productGridState.value = await productRepository.getAll();
     productGridLoadingState.value = false;
   }
 
   Future<void> _getProduct() async {
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     int productId = fetchProductDetails.value ?? 0;
     productDetailsState.value = await saleController.getProduct(productId);
     productDetailsLoadingState.value = false;

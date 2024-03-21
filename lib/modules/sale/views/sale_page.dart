@@ -29,7 +29,7 @@ class _SalePageState extends State<SalePage> {
   @override
   void initState() {
     // TODO - Remover
-    saleController.mockList();
+    // saleController.mockList();
     fetchProduct();
     fetchCard();
     super.initState();
