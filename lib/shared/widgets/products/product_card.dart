@@ -30,6 +30,7 @@ class ProductCard extends StatelessWidget {
                     child: Card(
                       child: Image.memory(
                         Uint8List.fromList(product.imageByteArray),
+                        gaplessPlayback: true,
                         errorBuilder: (context, exception, _) {
                           return const SizedBox(
                             width: 250,
