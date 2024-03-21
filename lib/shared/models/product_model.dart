@@ -16,6 +16,7 @@ class ProductModel extends HiveObject {
   final int price;
   @HiveField(4)
   final String imageUrl;
+  final List<int> imageByteArray;
   @HiveField(5)
   int quantity;
 
@@ -26,6 +27,7 @@ class ProductModel extends HiveObject {
     required this.price,
     required this.imageUrl,
     this.quantity = 0,
+    this.imageByteArray = const [],
   });
 
   String get formattedPrice {
@@ -40,6 +42,7 @@ class ProductModel extends HiveObject {
       price: json['VLPRECO'].toInt(),
       imageUrl: json['IMPRODUTO'].toString(),
       quantity: json['QTESTOQUE'],
+      imageByteArray: json['IMPRODUTO']['data'].cast<int>(),
     );
   }
 

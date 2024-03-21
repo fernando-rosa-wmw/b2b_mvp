@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
@@ -25,15 +26,18 @@ class _WebScrollState extends State<WebScroll> {
 
   @override
   Widget build(_) {
-    return WebSmoothScroll(
-      controller: _scrollController,
-      animationDuration: 500,
-      scrollOffset: 100,
-      child: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _scrollController,
-        child: widget.child,
-      ),
-    );
+    return kIsWeb ? WebSmoothScroll(
+            controller: _scrollController,
+            animationDuration: 500,
+            scrollOffset: 100,
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _scrollController,
+              child: widget.child,
+            ),
+          )
+        : SingleChildScrollView(
+            child: widget.child,
+          );
   }
 }

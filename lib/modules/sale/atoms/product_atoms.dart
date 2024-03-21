@@ -4,6 +4,8 @@ import 'package:b2b_mvp/shared/models/product_model.dart';
 //Atoms
 final productDetailsState = Atom<ProductModel?>(null);
 final productDetailsLoadingState = Atom(true);
+final selectedCounterState = Atom<int>(0);
+
 
 final productGridState = Atom<List<ProductModel>>([]);
 final productGridLoadingState = Atom(true);

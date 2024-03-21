@@ -9,12 +9,11 @@ class ProductReducer extends Reducer {
   final ProductRepository productRepository = Modular.get();
   SaleController saleController = Modular.get();
 
-
   ProductReducer() {
     on(() => [fetchProduct], () async {
       _fetchProduct();
     });
-    on(() => [fetchProductDetails], () async{
+    on(() => [fetchProductDetails], () async {
       await _getProduct();
     });
   }

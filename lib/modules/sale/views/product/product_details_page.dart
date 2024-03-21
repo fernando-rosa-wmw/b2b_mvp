@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:asp/asp.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:b2b_mvp/modules/sale/atoms/cart_atoms.dart';
@@ -8,7 +10,6 @@ import 'package:b2b_mvp/shared/widgets/screen/base_scaffold.dart';
 import 'package:b2b_mvp/shared/widgets/utils/NumericStepButton.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 
 import '../../../../shared/widgets/cart/cart_widget.dart';
 import '../../../../shared/widgets/platform_resolutions.dart';
@@ -28,24 +29,20 @@ class ProductDetailsPage extends StatefulWidget {
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   void initState() {
-    productImageSliverState.value = 0;
-    productDetailsLoadingState.value = true;
+    fetchCard();
+    productImageSliverState.setValue(0);
+    productDetailsLoadingState.setValue(true);
     fetchProductDetails.setValue(widget.productId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    context.select(() => [
-          productDetailsLoadingState,
-          cartState,
-        ]);
+    context.select(() => [productDetailsLoadingState]);
 
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
     final ProductModel? product = productDetailsState.value;
-
-    Logger().i(widget.productId);
 
     return BaseScaffold(
       body: (productDetailsLoadingState.value || productDetailsState.value == null)
@@ -246,7 +243,22 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                       ),
                       onPressed: () {
-                        addProductToCard.setValue(product);
+                        for (int i = 0; i < selectedCounterState.value; i++) {
+                          addProductToCard.setValue(product);
+                        }
+                        selectedCounterState.value = 0;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text("Produto Adicionado!"),
+                            behavior: SnackBarBehavior.floating,
+                            action: SnackBarAction(
+                              label: "Desfazer",
+                              onPressed: () {
+                                removeProductFromCard.setValue(product);
+                              },
+                            ),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -269,14 +281,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           SizedBox(
             width:
                 (width >= PlatformResolutions.phone_width) ? 250 : width * .5,
-            child: NumericStepButton(
-              onAddChanged: () {
-                addProductToCard.setValue(product);
-              },
-              onRemoveChanged: () {
-                removeProductFromCard.setValue(product);
-              },
-              counter: product!.quantity,
+            child: RxBuilder(
+              builder: (context) {
+                return NumericStepButton(
+                  onAddChanged: () {
+                    selectedCounterState.value++;
+                  },
+                  onRemoveChanged: () {
+                    if (selectedCounterState.value > 0) selectedCounterState.value--;
+                  },
+                  counter: selectedCounterState.value,
+                );
+              }
             ),
           )
         ],
@@ -295,7 +311,6 @@ class ProductImageCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select(() => [productImageSliverState]);
     final CarouselController carouselController = CarouselController();
 
     return Column(
@@ -313,7 +328,20 @@ class ProductImageCarousel extends StatelessWidget {
           ),
           itemBuilder: (context, index, realIndex) {
             return Card.outlined(
-              child: Image.network(product.imageUrl),
+              child: Image.memory(
+                Uint8List.fromList(product.imageByteArray),
+                errorBuilder: (context, exception, _) {
+                  return const SizedBox(
+                    width: 250,
+                    height: 250,
+                    child: Icon(
+                      Icons.image_not_supported_outlined,
+                      color: Colors.red,
+                      size: 100,
+                    ),
+                  );
+                },
+              ),
             );
           },
           itemCount: 3,
@@ -326,48 +354,47 @@ class ProductImageCarousel extends StatelessWidget {
               (entry) {
                 return GestureDetector(
                   onTap: () => carouselController.animateToPage(entry.key),
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 4.0,
-                    ),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: (Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white
-                              : Theme.of(context).colorScheme.primary)
-                          .withOpacity(
-                              productImageSliverState.value == entry.key
-                                  ? 0.9
-                                  : 0.4),
-                    ),
-                    child: Opacity(
-                      opacity: productImageSliverState.value == entry.key
-                          ? 0.9
-                          : 0.4,
-                      child: Image.network(
-                        width: 100,
-                        height: 100,
-                        product.imageUrl,
-                        loadingBuilder: (context, widget, imageChunk) {
-                          if (imageChunk == null) return widget;
-                          return const CircularProgressIndicator();
-                        },
-                        errorBuilder: (context, exception, _) {
-                          return const SizedBox(
-                            width: 100,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      RxBuilder(
+                        builder: (context) {
+                          return Container(
                             height: 100,
-                            child: Icon(
+                            width: 100,
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 8.0,
+                              horizontal: 4.0,
+                            ),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color:
+                                  (Theme.of(context).brightness == Brightness.dark
+                                          ? Colors.white
+                                          : Theme.of(context).colorScheme.primary)
+                                      .withOpacity(
+                                          productImageSliverState.value == entry.key
+                                              ? 0.9
+                                              : 0.4),
+                            ),
+                          );
+                        }
+                      ),
+                      SizedBox(
+                        width: 75,
+                        height: 75,
+                        child: Image.memory(
+                          Uint8List.fromList(product.imageByteArray),
+                          errorBuilder: (context, exception, _) {
+                            return const Icon(
                               Icons.image_not_supported_outlined,
                               color: Colors.red,
                               size: 100,
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 );
               },

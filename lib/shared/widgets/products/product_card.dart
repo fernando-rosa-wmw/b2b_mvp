@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:b2b_mvp/modules/sale/atoms/cart_atoms.dart';
 import 'package:b2b_mvp/shared/format.dart';
@@ -26,7 +28,20 @@ class ProductCard extends StatelessWidget {
                     height: 100,
                     width: 100,
                     child: Card(
-                      child: Image.network(product.imageUrl),
+                      child: Image.memory(
+                        Uint8List.fromList(product.imageByteArray),
+                        errorBuilder: (context, exception, _) {
+                          return const SizedBox(
+                            width: 250,
+                            height: 250,
+                            child: Icon(
+                              Icons.image_not_supported_outlined,
+                              color: Colors.red,
+                              size: 100,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),

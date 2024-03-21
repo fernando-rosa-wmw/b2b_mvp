@@ -32,44 +32,46 @@ class BaseScaffold extends StatelessWidget {
       ),
       body: body,
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
-      floatingActionButton: Container(
-        margin: const EdgeInsets.only(top: 50),
-        height: 64,
-        width: 64,
-        color: Colors.transparent,
-        child: Stack(
-          children: [
-            SizedBox(
-              height: 75,
-              width: 75,
-              child: FloatingActionButton(
-                backgroundColor: Colors.white,
-                elevation: 0,
-                onPressed: floatingAction,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 3, color: Colors.black),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: const Icon(
-                  Icons.shopping_cart_outlined,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            if (cartState.value != null &&
-                cartState.value!.productList!.isNotEmpty)
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Theme.of(context).colorScheme.primary),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('${cartState.value!.productList!.length}'),
+      floatingActionButton: Transform.translate(
+        offset: const Offset(0, 20),
+        child: Container(
+          height: 64,
+          width: 64,
+          color: Colors.transparent,
+          child: Stack(
+            children: [
+              SizedBox(
+                height: 75,
+                width: 75,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  onPressed: floatingAction,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(width: 3, color: Colors.black),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: const Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Colors.black,
                   ),
                 ),
-              )
-          ],
+              ),
+              if (cartState.value != null &&
+                  cartState.value!.productList!.isNotEmpty)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Theme.of(context).colorScheme.primary),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('${cartState.value!.productList!.length}'),
+                    ),
+                  ),
+                )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: NavBar(
@@ -231,8 +233,7 @@ class BaseScaffold extends StatelessWidget {
               ),
             ),
           ),
-        )
-        .toList();
+        ).toList();
   }
 
   AppBar buildAppBar(BuildContext context) {

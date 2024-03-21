@@ -42,7 +42,7 @@ class HiveProductRepository implements ProductRepository {
 
   @override
   Future<List<ProductModel>> getAll() async {
-    // var box = await Hive.openBox<ProductModel>(boxName);
+    var box = await Hive.openBox<ProductModel>(boxName);
     final dio = Dio();
     final response = await dio.get('http://206.0.94.207:8100/products/queryProducts');
 
@@ -50,14 +50,13 @@ class HiveProductRepository implements ProductRepository {
 
     int i = 0;
 
-    List<ProductModel> products = (jsonList.sublist(0, 15))
+    List<ProductModel> products = (jsonList)
         .map((productJson) => ProductModel.fromJson(productJson, i++))
         .toList();
 
-    Logger().e(products);
-
     try {
-      // List<ProductModel> products = box.values.toList();
+      await box.clear();
+      await box.addAll(products);
       return products;
     } catch (e, s) {
       Logger().e(e, stackTrace: s);

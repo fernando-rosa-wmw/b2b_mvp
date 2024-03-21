@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:b2b_mvp/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
@@ -57,14 +59,7 @@ class ProductItem extends StatelessWidget {
                             ),
                           ),
                           child: SizedBox(
-                            child: Image.network(
-                              width: 250,
-                              height: 250,
-                              product.imageUrl,
-                              loadingBuilder: (context, widget, imageChunk) {
-                                if (imageChunk == null) return widget;
-                                return const CircularProgressIndicator();
-                              },
+                            child: Image.memory(Uint8List.fromList(product.imageByteArray),
                               errorBuilder: (context, exception, _) {
                                 return const SizedBox(
                                   width: 250,
@@ -75,8 +70,7 @@ class ProductItem extends StatelessWidget {
                                     size: 100,
                                   ),
                                 );
-                              },
-                            ),
+                              },),
                           ),
                         ),
                         if (product.id.isEven)

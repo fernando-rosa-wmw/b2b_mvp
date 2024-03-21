@@ -9,6 +9,7 @@ import 'package:b2b_mvp/shared/widgets/platform_resolutions.dart';
 import 'package:b2b_mvp/shared/widgets/products/product_carousel.dart';
 import 'package:b2b_mvp/shared/widgets/responsives/responsive_gridview.dart';
 import 'package:b2b_mvp/shared/widgets/screen/base_scaffold.dart';
+import 'package:b2b_mvp/shared/widgets/screen/web_scroll.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -37,17 +38,14 @@ class _SalePageState extends State<SalePage> {
 
   @override
   Widget build(BuildContext context) {
-    context.select(() => [
-          productGridState,
-          productGridLoadingState,
-          cartState,
-        ]);
+    context.select(() => [productGridLoadingState]);
+
     final List<ProductModel> productList = productGridState.value;
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
 
     return BaseScaffold(
-      body: SingleChildScrollView(
+      body: WebScroll(
         child: Column(
           children: [
             CarouselSlider(
