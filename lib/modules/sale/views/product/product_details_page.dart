@@ -312,7 +312,8 @@ class ProductImageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CarouselController carouselController = CarouselController();
-
+    context.select(() => [productImageSliverState]);
+    
     return Column(
       children: [
         CarouselSlider.builder(
@@ -330,6 +331,7 @@ class ProductImageCarousel extends StatelessWidget {
             return Card.outlined(
               child: Image.memory(
                 Uint8List.fromList(product.imageByteArray),
+                gaplessPlayback: true,
                 errorBuilder: (context, exception, _) {
                   return const SizedBox(
                     width: 250,
@@ -354,37 +356,31 @@ class ProductImageCarousel extends StatelessWidget {
               (entry) {
                 return GestureDetector(
                   onTap: () => carouselController.animateToPage(entry.key),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      RxBuilder(
-                        builder: (context) {
-                          return Container(
-                            height: 100,
-                            width: 100,
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 8.0,
-                              horizontal: 4.0,
-                            ),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color:
-                                  (Theme.of(context).brightness == Brightness.dark
-                                          ? Colors.white
-                                          : Theme.of(context).colorScheme.primary)
-                                      .withOpacity(
-                                          productImageSliverState.value == entry.key
-                                              ? 0.9
-                                              : 0.4),
-                            ),
-                          );
-                        }
-                      ),
-                      SizedBox(
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 8.0,
+                      horizontal: 4.0,
+                    ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: (Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Theme.of(context).colorScheme.primary)
+                          .withOpacity(
+                              productImageSliverState.value == entry.key
+                                  ? 0.9
+                                  : 0.4),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
                         width: 75,
                         height: 75,
                         child: Image.memory(
                           Uint8List.fromList(product.imageByteArray),
+                          gaplessPlayback: true,
                           errorBuilder: (context, exception, _) {
                             return const Icon(
                               Icons.image_not_supported_outlined,
@@ -394,7 +390,7 @@ class ProductImageCarousel extends StatelessWidget {
                           },
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 );
               },
